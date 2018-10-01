@@ -1,0 +1,121 @@
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+% \begin{figure}[h!]
+\begin{table}[h!]
+
+\begin{center}
+
+    % \hline
+    \caption{Rates of Coverage and Correct Forecasts} \label{fig:Coverage1}
+
+    % \hline
+    \begin{tabular}{l l c c }
+
+    True Values & Method & Coverage Rate & Correct Forecast Rate \\
+
+    \hline
+
+    %[1] "Coverage rates for n = 1100, A_L = 0.680000, A_H = 0.720000"
+%               method coverage  forecast
+%    1:      Bi-normal   0.8265 0.6612295
+%    2: DeLong et. al.   0.8395 0.6689495
+%    3:      Bootstrap   0.8310 0.6616050
+%    4:    Upper Bound   0.9885 0.9074855
+%    5:       Forecast   0.9955 0.9600615
+
+$A_L = 0.68$, &
+          Bi-normal &  0.8265 & 0.6612 \\
+$A_H = 0.72$ &
+     DeLong et. al. &  0.8395 & 0.6689 \\
+ &         Bootstrap &  0.8310 & 0.6616 \\
+ &       Upper Bound &  0.9885 & 0.9074 \\
+ &          Forecast &  0.9955 & 0.9600 \\
+
+
+    \hline
+
+%    [1] "Coverage rates for n = 1100, A_L = 0.650000, A_H = 0.750000"
+%           method coverage  forecast
+%    1:      Bi-normal   0.2360 0.3427380
+%    2: DeLong et. al.   0.2470 0.3515930
+%    3:      Bootstrap   0.2455 0.3453490
+%    4:    Upper Bound   0.7725 0.6615905
+%    5:       Forecast   0.9795 0.9259675
+
+$A_L = 0.65$, &
+          Bi-normal &  0.2360 & 0.3427 \\
+$A_H = 0.75$ &
+     DeLong et. al. &  0.2470 & 0.3515 \\
+ &         Bootstrap &  0.2455 & 0.3453 \\
+ &       Upper Bound &  0.7725 & 0.6615 \\
+ &          Forecast &  0.9795 & 0.9259 \\
+
+
+    \hline
+
+%    [1] "Coverage rates for n = 1100, A_L = 0.750000, A_H = 0.800000"
+%           method coverage  forecast
+%    1:      Bi-normal   0.6805 0.5912520
+%    2: DeLong et. al.   0.6845 0.5979860
+%    3:      Bootstrap   0.6730 0.5889715
+%    4:    Upper Bound   0.9665 0.8654290
+%    5:       Forecast   0.9940 0.9451650
+
+$A_L = 0.75$, &
+          Bi-normal &  0.6805 & 0.5912 \\
+$A_H = 0.80$ &
+     DeLong et. al. &  0.6845 & 0.5979 \\
+ &         Bootstrap &  0.6730 & 0.5889 \\
+ &       Upper Bound &  0.9665 & 0.8654 \\
+ &          Forecast &  0.9940 & 0.9451 \\
+
+    \hline
+
+%    [1] "Coverage rates for n = 1100, A_L = 0.700000, A_H = 0.700000"
+%           method coverage  forecast
+%    1:      Bi-normal    0.951 0.7402125
+%    2: DeLong et. al.    0.944 0.7477020
+%    3:      Bootstrap    0.941 0.7386815
+%    4:    Upper Bound    1.000 0.9464325
+%    5:       Forecast    0.999 0.9702450
+
+$A_L = 0.70$, &
+          Bi-normal  &  0.951 & 0.7402 \\
+$A_H = 0.70$ &
+     DeLong et. al.  &  0.944 & 0.7477 \\
+ &         Bootstrap  &  0.941 & 0.7386 \\
+ &       Upper Bound  &  1.000 & 0.9464 \\
+ &          Forecast  &  0.999 & 0.9702 \\
+
+    \hline
+
+    \end{tabular}
+
+    % \hline
+
+\end{center}
+
+    \footnotesize
+
+        \textbf{Rates of Coverage and Correct Forecasts:}
+        Coverage rates are the proportion of confidence intervals that contain the true values of the AUROC.
+        Correct forecast rates are the proportion of confidence intervals that contain the estimated values of the AUROC.
+        Number of replications is $1,000$ for all models, with $399$ bootstrap replications for bootstrap confidence intervals.
+        Data generating process is a two-state regime-switching model with a bi-normal classification model in each state,
+        with true AUROC values of $A_L$ in the low state and $A_H$ in the high state.
+        % Bi-normal models have standard deviations of $1/sqrt{2}$.
+        % Positive distributions have
+
+
+    % \hline
+
+
+
+% \end{figure}
+\end{table}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+

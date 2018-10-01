@@ -1,0 +1,125 @@
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass{beamer}
+% \usepackage{graphicx}
+\usepackage{beamerthemesplit}
+\usepackage{color}
+
+% \usepackage{color}
+% \input{preamble1.tex}
+
+% End of package list and other added codes.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% \titlegraphic{\includegraphics[width=\textwidth,height=.5\textheight]{someimage}}
+% \titlegraphic{\includegraphics[scale =  0.05 ]{C1_Core_2CG_RGB.jpg}}
+
+\title{Prediction Intervals for\\
+    the Area Under the ROC Curve}
+
+
+
+\author[Lee Morin, Queen's University]{Lee Morin}
+
+\institute[Queen's University]
+{
+    Department of Economics \\
+    Queen's University
+    % Capital One
+    % \includegraphics[scale =  0.05 ]{C1_Core_2CG_RGB.jpg}
+}
+
+% \logo{\includegraphics[scale =  0.025 ]{C1_Core_2CG_RGB.jpg}}
+
+%\author{Lee Morin}
+%\institute[Queen's University]
+%{
+%    Department of Economics \\
+%    Queen's University
+%}
+
+\date{\today}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{document}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\frame{\titlepage}
+% \frametitle{Agenda}
+
+\section[Outline]{}
+
+\frame{\tableofcontents}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\section{Introduction}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}
+\frametitle{Predicting Performance of Classification Models}
+
+% Tagline goes here
+\begin{itemize}
+    \item \textbf{What:} Method for calculating a prediction interval for the Area Under the ROC curve (AUROC)
+    \begin{itemize}
+        \item Area under the Receiver Operating Characteristic (ROC) curve is a measure of quality of a signal for a message
+        \item In predictive modeling, it is often used as a measure of performance of a classification model
+    \end{itemize}
+    \item \textbf{Why:} Characterize the likely range of model performance when model is used for prediction
+    \begin{itemize}
+        \item In practice, businesses will use model until:
+        \begin{itemize}
+            \item Performance (AUROC) degrades
+            \item Population changes
+        \end{itemize}
+    \end{itemize}
+    \item \textbf{How:} Measure the variation in AUROC in terms of the variation in the underlying distribution of predictive variables
+    \begin{itemize}
+        \item Not only from sampling variation from a fixed distribution
+    \end{itemize}
+\end{itemize}
+
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\end{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+

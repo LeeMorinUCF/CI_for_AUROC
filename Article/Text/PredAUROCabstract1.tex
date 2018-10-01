@@ -1,0 +1,129 @@
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Article:
+% Prediction Intervals for the Area Under the ROC Curve
+% Title page and Abstract
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+\begin{center}
+\vspace{3.0in}
+
+
+{\Large
+% Bootstrap Inference for the \\
+% \vspace{0.10in}
+% Area Under the ROC Curve \\
+Forecast Intervals for the Area Under the ROC Curve \\
+% \vspace{0.10in}
+with a Time-varying Population \\
+}
+
+\vspace{0.75in}
+
+
+{\large{Lealand Morin\footnote{I am grateful for helpful feedback
+% from Morten Nielsen, James MacKinnon,
+% Bill McLausland
+% and
+from seminar participants at
+% Queen's University. %, other Universities
+the University of Central Florida. %, other Universities
+% and annual meetings of the Canadian Economics Association.
+% I also gratefully acknowledge SSHRC for their generous support of this research.
+All errors are my own. } \\
+Department of Economics \\
+% Queen's University \\
+% morinl@econ.queensu.ca \\
+% www.econ.queensu.ca/faculty/morin/home
+%
+College of Business Administration \\
+University of Central Florida \\
+Lealand.Morin@business.ucf.edu \\
+https://business.ucf.edu/person/lealand-morin/ }}
+
+
+
+
+\vspace{0.5in}
+
+\today
+
+\vspace{0.50in}
+
+
+
+{\large{Abstract}}  \\
+\vspace{0.25in}
+
+\end{center}
+
+There are several approaches to quantify the variability of the area under the receiver operating characteristic curve (AUROC) to measure the predictive performance of a binary classification model.
+%
+These methods typically involve calculating the variance of the estimate and calculating a $z$-statistic, under specified distributional assumptions
+% or following some distribution-free approaches.
+to characterize sampling variability.
+%
+%
+In contrast, this paper proposes an approach
+% to impose the null hypothesis of a particular AUROC,
+to characterize variability in the AUROC by allowing for additional variation in the sampling distribution.
+% without the need for distributional assumptions. % The approach involves solving for the closest distribution.
+%
+This additional variation corresponds to changes in the population over time.
+%
+Then, the variation is quantified by measuring the distance between joint distributions of subsamples from that of the full sample.
+%
+This provides an estimate of an interval for forecasting the value of the AUROC to be expected in future applications of the model.
+%
+
+%The variation in the predicted AUROC is characterized by allowing for a distance between the empirical distribution and distributions that may hold while the classification model is used out of sample.
+%The prediction interval is calculated by solving for the values of the AUROC statistic that lie furthest from that of the observed sample but within a specified distance from the empirical distribution.
+%The bounds of the interval are calculated by first
+%% solving for the values that match
+%solving for the distribution with
+%% In essence, the procedure involves re-weighting the observations to
+%% those of
+%the closest data generating process
+%% that satisfies the null hypothesis of a particular AUROC value.
+%that produces a particular AUROC value.
+%%
+%Then the bounds are calculated as the upper and lower values of the AUROC that lie exactly the specified distance from the empirical distribution.
+%
+%
+%In this context, distance is defined by using nonparametric test statistics for the difference between the distributions of the model predictions under each of the positive and negative sets of observations.
+%% Two distance metrics are analyzed, including the Chi-square statistic and an information-based criterion.
+%% Under either approach,
+%The key element is a recursive algorithm for reallocation of sampling weights in the empirical distribution.
+%The algorithm solves for a set of fixed points that characterize the optimal distribution,
+%from which the desired AUROC values are calculated.
+%%
+%%
+%%
+%Simulation exercises show the prediction intervals to have higher coverage rates than competing approaches that allow only for sampling variation.
+
+% The result provides two approaches to test the statistical significance of a difference between competing models.
+% The first is achieved by inverting the distance metric, finding the AUROC values corresponding to quantiles of the chi-square distribution.
+% This is made more flexible by considering simulation methods, in which a bootstrap technique is employed to achieve refinements on the performance of the testing approach.
+% Test performance is compared by analyzing power curves and coverage rates of confidence intervals.
+
+
+\vspace{0.10in}
+
+
+
+
+KEY WORDS: ROC curve, AUC, AUROC, classification models, predictive modeling, Mann-Whitney statistic, Wilcoxon statistic, Kullback-Leibler divergence.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\vspace{0.10in}
+% \pagebreak
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

@@ -1,0 +1,9 @@
+\beamer@sectionintoc {2}{Introduction}{3}{0}{1}
+\beamer@sectionintoc {3}{Contribution}{9}{0}{2}
+\beamer@subsectionintoc {3}{1}{Optimization Problem}{10}{0}{2}
+\beamer@subsectionintoc {3}{2}{Comparison}{13}{0}{2}
+\beamer@subsectionintoc {3}{3}{Simulations}{15}{0}{2}
+\beamer@sectionintoc {4}{Methods}{20}{0}{3}
+\beamer@subsectionintoc {4}{1}{Measuring Distance}{20}{0}{3}
+\beamer@subsectionintoc {4}{2}{Algorithm}{25}{0}{3}
+\beamer@sectionintoc {5}{Conclusion}{26}{0}{4}

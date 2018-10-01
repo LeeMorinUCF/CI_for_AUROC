@@ -1,0 +1,468 @@
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass{beamer}
+% \usepackage{graphicx}
+\usepackage{beamerthemesplit}
+
+
+% \usepackage{color}
+\input{preamble1.tex}
+
+% End of package list and other added codes.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% \titlegraphic{\includegraphics[width=\textwidth,height=.5\textheight]{someimage}}
+% \titlegraphic{\includegraphics[scale =  0.05 ]{C1_Core_2CG_RGB.jpg}}
+
+\title{Comparing with Confidence: \\
+    Tools for Comparing Models with Somers’ $D$}
+
+
+
+\author{Lee Morin, Sr. Data Scientist}
+
+\institute[Capital One Canada]
+{
+    Canada Statistical Data Science \\
+    % Capital One
+    \includegraphics[scale =  0.05 ]{C1_Core_2CG_RGB.jpg}
+}
+
+% \logo{\includegraphics[scale =  0.025 ]{C1_Core_2CG_RGB.jpg}}
+
+%\author{Lee Morin}
+%\institute[Queen's University]
+%{
+%    Department of Economics \\
+%    Queen's University
+%}
+
+\date{\today}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{document}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\frame{\titlepage}
+% \frametitle{Agenda}
+
+\section[Outline]{}
+
+\frame{\tableofcontents}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\section{Motivation}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}
+\frametitle{Example from a Modeling Competition}
+
+% A horse race between models often ends in a photo finish
+\begin{figure}
+    \includegraphics[scale =  0.75 ]{ThisIsNotSkyNetLogo.png}
+\end{figure}
+
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}
+\frametitle{Leaderboard from Modeling Competition}
+
+\texttt{System time 2017-01-10 11:59:59....................\\
+.............................Competition TERMINATED
+}
+
+
+\begin{figure}
+    \includegraphics[scale =  0.5 ]{NotSkyNetLeaderboard.png}
+\end{figure}
+
+A horse race between models often ends in a photo finish.
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}
+\frametitle{The competition: Area Under ROC Curve Simulations}
+
+\begin{figure}
+    \includegraphics[scale =  0.5 ]{NotSkyNetAUSsims.png} % Note typo.
+\end{figure}
+
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}
+\frametitle{Warning!}
+
+I'm declaring this a math friendly zone!
+\begin{figure}
+    \includegraphics[scale =  0.5 ]{CautionMath.png}
+\end{figure}
+
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}
+\frametitle{Estimating Somers' $D$ with Confidence}
+
+Calculating a confidence interval for the Somers' $D$ statistic
+\begin{itemize}
+    \item Consider statistical significance
+    \begin{itemize}
+        \item Often, competing models can be very close
+        \item Know when to stop iterating on the model
+    \end{itemize}
+    \item Measure the variability of Somers' $D$
+    \begin{itemize}
+        \item Instructions for calculating standard errors on Somers' $D$
+        \item Produces an analogue for the $t$-statistic for Somers' $D$
+    \end{itemize}
+    \item Use resampling techniques to get a refinement
+    \begin{itemize}
+        \item e.g. bootstrap or jackknife
+        \item Robust to violations of standard assumptions
+        \item In particular, uses the empirical distribution
+    \end{itemize}
+%    \item Use the bootstrap well
+%    \begin{itemize}
+%        \item Avoid common misunderstandings
+%        \item Choose a particular statistic to bootstrap
+%    \end{itemize}
+\end{itemize}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\section{Gini and Somers' $D$}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}
+\frametitle{Definition of Somers' $D$}
+
+There are two ways of defining Somers' $D$
+\begin{itemize}
+    \item Measuring concordance - discordance
+    \begin{itemize}
+        \item $D = \frac{\tau_{XY}}{\tau_{XY}}$
+        \item where $\tau_{XY} = E[\mathrm{sign}(X_i - X_j)\mathrm{sign}(Y_i - Y_j)]$,
+        \item known as Kendall's $\tau$, a rank ordering statistic
+    \end{itemize}
+    \item Measuring the area under the ROC curve
+    \begin{itemize}
+        \item ROC: the cumulative \% of events against the (ordered) cumulative \% of non events
+        \item $\int_{0}^{1} y(x) dF(x)$, where $y(x)$ is the event rate at score $x$.
+    \end{itemize}
+\end{itemize}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}
+\frametitle{Somers' $D$ version 1}
+
+\begin{figure}
+    \includegraphics[scale =  0.75 ]{SASsomersD.png}
+\end{figure}
+
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}
+\frametitle{Somers' $D$ version 2}
+
+\begin{figure}
+    \includegraphics[scale =  0.75 ]{SASgini.png}
+\end{figure}
+
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}
+\frametitle{Somers' $D$}
+
+There are two ways of \emph{calculating} Somers' $D$
+\begin{itemize}
+    \item Measuring concordance - discordance
+    \begin{itemize}
+        \item $\hat{D} = \frac{\hat{\tau}_{XY}}{\hat{\tau}_{XX}}$
+        \item where $\hat{\tau}_{XY} = \sum_{i = 1}^{n} \sum_{j = 1}^{n} \mathrm{sign}(X_i - X_j)\mathrm{sign}(Y_i - Y_j)$
+    \end{itemize}
+    \item By calculating the Gini index
+    \begin{itemize}
+        \item $G = \frac{2}{\mu} \int_{0}^{\infty} yF(y)dF(y) - 1$,
+            where $\mu$ is the average of $y$
+        % \item where $\mu$ is the average of $y$
+        \item $\hat{G} = \frac{2}{\hat{\mu}n^2} \sum_{i = 1}^{n} y_{(i)}(i - \frac{1}{2}) - 1$,
+            where $y_{(i)}$ is $y$ sorted by $X$
+        % \item and $\hat{D} = 2 \hat{G}$
+    \end{itemize}
+\end{itemize}
+% ... and $\hat{D} = 2 \hat{G}$.
+
+\end{frame}
+
+
+\section{Confidence Intervals for Somers' $D$}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}
+\frametitle{Variance of the Gini Index}
+
+% Where Somers' $D$ is $2\times$ Gini's $G$
+% Since Somers' $D$ is the same as Gini's $G$
+Use distribution of Gini's $G$ for inference on Somers' $D$
+\begin{itemize}
+    \item $\hat{\mathrm{Var}}(\hat{G}) = \frac{1}{(n\hat{\mu})^2} \sum_{i = 1}^{n}(\hat{Z}_i - \bar{Z})^2$
+    \begin{itemize}
+        \item where $\hat{Z} = - (\hat{G} + 1) y_{(i)} + \frac{2i - 1}{n} y_{(i)} - \frac{2}{n} \sum_{j = 1}^{n} y_{(j)}$
+        \item and $\bar{Z}$ is the average of the $Z_i$
+    \end{itemize}
+    \item Then, an analogue for the $t$-statistic is
+    \begin{itemize}
+        \item To test $H_0: G = G_0$,
+        \item calculate $\tau = \frac{\hat{G} - G_0}{\hat{\sigma}_G}$
+        \item where $\hat{\sigma}_G = \sqrt{\hat{\mathrm{Var}}(\hat{G})}$
+    \end{itemize}
+\end{itemize}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}
+\frametitle{A Confidence Interval for the Gini Index}
+
+It turns out that this statistic is normally distributed in large samples
+\begin{itemize}
+    \item Under $H_0: G = G_0$ and using the estimates $\hat{G}$ and $\hat{\sigma}_G$
+    \begin{itemize}
+        \item Construct a confidence interval as you normally would for a $t$-statistic:
+        \item $(1 - \alpha)$\% confidence interval: \\
+            $\left[ \hat{G} - \hat{\sigma}_G z_{1 - \frac{\alpha}{2}}, \hat{G} + \hat{\sigma}_G z_{1 - \frac{\alpha}{2}} \right]$ \\
+            contains $G_0$, $1 - \alpha$ percent of the time
+    \end{itemize}
+    % \item Then multiply by $2$ for Somers' $D$
+\end{itemize}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\section{The Bootstrap}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}
+\frametitle{Bootstrapping statistics (Example: Linear model)}
+
+A common (mis)understanding of ``\emph{the} bootstrap'' \\
+for testing $H_0: \beta = \beta_0$
+\begin{itemize}
+    \item For the model $y = X\beta + \varepsilon$, estimate $\beta$
+    \item For each bootstrap sample, $j = 1, \dots, B$:
+    \begin{itemize}
+        \item Take a sample of $(y^{*}, X^{*})$ of size $n$ from $y$ and $X$, with replacement
+        \item Estimate $\hat{\beta}^{*}$ from $y^{*} = X^{*}\beta^{*} + \varepsilon^{*}$
+    \end{itemize}
+    \item Use the distribution of $\hat{\beta}^{*}$ to draw inference
+    \item Called the `pairs bootstrap'
+    \begin{itemize}
+        \item sampling $X$ and $Y$ in pairs
+    \end{itemize}
+\end{itemize}
+
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}
+\frametitle{What's the problem?}
+
+The pairs bootstrap is an `apples to oranges' comparison with other statistics
+\begin{itemize}
+    \item This doesn't impose $H_0$
+    \item Allows $X_i$ to vary
+    \item Carrying each $y_i$ with it...
+    \begin{itemize}
+        \item ...implies carrying the error $\varepsilon_i$ with it
+        \item so it is not accounting for the variation in $\varepsilon_i$ on its own
+    \end{itemize}
+\end{itemize}
+
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}
+\frametitle{Bootstrapping statistics (Example: Linear model)}
+
+A better version of the bootstrap for testing $H_0: \beta = \beta_0$:
+\begin{itemize}
+    \item For the model $y = X\beta + \varepsilon$, estimate $\beta$, calculate statistic $\tau$
+    \item Calculate the residuals $\hat{u}$
+    \item For each bootstrap sample, $j = 1, \dots, B$:
+    \begin{itemize}
+        \item Take a sample $\hat{u}^{*}$ of size $n$ from $\hat{u}$, with replacement
+        \item Construct the bootstrap sample $y^{*} = X\beta_0 + \hat{u}^{*}$, imposing $H_0$
+        \item Estimate $\hat{\beta}^{*}$ and calculate statistic $\tau^{*}$
+    \end{itemize}
+    \item Conduct $t$-test or calculate $p$-value from sample of $\tau^{*}$
+    \begin{itemize}
+        \item Better: imposes the null hypothesis and avoids confounding with variation in $X$
+    \end{itemize}
+\end{itemize}
+
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\section{Bootstrapping Gini's $G$ and Somers' $D$}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}
+\frametitle{Bootstrapping Gini's $G$ and Somers' $D$}
+
+Recommended version of the bootstrap \\
+for testing $H_0: G = G_0$ or $H_0: D = D_0$:
+\begin{itemize}
+    \item For the predictive model $(y, X)$, calculate statistic $\hat{G}$ or $\hat{D}$
+    \item Calculate the statistic $\tau = \frac{\hat{G} - G_0}{\sigma_G} = \frac{\hat{D} - D_0}{\sigma_D}$
+    \item For each bootstrap sample, $j = 1, \dots, B$:
+    \begin{itemize}
+        \item Take a sample $(y^{*}, X^{*})$ of size $n$ from $(y, X)$, with replacement
+        \item Estimate $\hat{G}^{*}$ and calculate statistic $\tau^{*} = \frac{\hat{G}^{*} - G_0}{\sigma_G^{*}} = \frac{\hat{D}^{*} - D_0}{\sigma_D^{*}}$, imposing $H_0$
+    \end{itemize}
+    \item Conduct $t$-test or calculate $p$-value from sample of $\tau^{*}$
+    \begin{itemize}
+        \item Caution: \emph{Looks} like the pairs bootstrap
+        % \item The difference is in the calculation of $\tau^{*}$ within samples, not across samples
+    \end{itemize}
+\end{itemize}
+
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}
+\frametitle{Another alternative: The jackknife}
+
+Two approaches to calculating jackknife distributions for $G$ or $D$
+\begin{itemize}
+    \item Both involve ``resampling'' with samples of size $n - 1$, leaving one $(y_i, X_i)$ out
+    \item Newson (2006) implemented \textbf{\texttt{somersd}} in Stata
+    \begin{itemize}
+        \item Ignores the knowledge of the distribution of $\hat{G}$
+    \end{itemize}
+    \item Davidson (2008) outlines another approach that mirrors the bootstrap above
+    \begin{itemize}
+        \item Calculation is also based on the variance of a derived variable
+        \item Calculations show that it does not produce a consistent estimator of the limiting variance of $G$
+        \item Simulation evidence verifies this conclusion
+    \end{itemize}
+\end{itemize}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}
+\frametitle{The Tie-breaker? Confidence intervals for Somers' D}
+
+\begin{figure}
+    \includegraphics[scale =  0.5 ]{Tiebreaker.png} % Note typo.
+\end{figure}
+
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}
+\frametitle{Keep it Simple!}
+
+% Where Somers' $D$ is $2\times$ Gini's $G$
+Simple solution: Calculate the standard errors directly
+
+\begin{itemize}
+    \item Calculate Somers' $D$
+    \item Calculate the variable $\hat{Z}$
+    \begin{itemize}
+        \item where $\hat{Z} = - (\hat{D} + 1) y_{(i)} + \frac{2i - 1}{n} y_{(i)} - \frac{2}{n} \sum_{j = 1}^{n} y_{(j)}$
+        \item and $\bar{Z}$ is the average of the $Z_i$
+    \end{itemize}
+    \item Calculate the variance $\hat{\mathrm{Var}}(\hat{D})$
+    \begin{itemize}
+        \item $\hat{\mathrm{Var}}(\hat{D}) = \frac{1}{(n\hat{\mu})^2} \sum_{i = 1}^{n}(\hat{Z}_i - \bar{Z})^2$
+    \end{itemize}
+    \item Calculate the analogue for the $t$-statistic
+    \begin{itemize}
+        \item To test $H_0: D = D_0$,
+        \item calculate $\tau = \frac{\hat{D} - D_0}{\hat{\sigma}_D}$
+        \item where $\hat{\sigma}_D = \sqrt{\hat{\mathrm{Var}}(\hat{D})}$
+    \end{itemize}
+\end{itemize}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}
+\frametitle{For further details}
+
+See the programs in my GitHub Repo: \\
+https://github.kdc.capitalone.com/iky155/SomersDwithConfidence
+\begin{figure}
+    \includegraphics[scale =  0.10 ]{Octocat1.png}
+\end{figure}
+Thank you!
+
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\end{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+

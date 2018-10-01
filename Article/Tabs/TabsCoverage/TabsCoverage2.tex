@@ -1,0 +1,63 @@
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{figure}[h!]
+
+\begin{center}
+
+    % \hline
+    \caption{Rates of Coverage and Correct Forecasts ($A_L = 0.65, A_H = 0.75$)} \label{fig:Coverage1}
+
+    % \hline
+    \begin{tabular}{l c c }
+
+    Method & Coverage Rate & Correct Forecast Rate \\
+
+    \hline
+    
+%    [1] "Coverage rates for n = 1100, A_L = 0.650000, A_H = 0.750000"
+%           method coverage  forecast
+%    1:      Bi-normal   0.2360 0.3427380
+%    2: DeLong et. al.   0.2470 0.3515930
+%    3:      Bootstrap   0.2455 0.3453490
+%    4:    Upper Bound   0.7725 0.6615905
+%    5:       Forecast   0.9795 0.9259675
+
+
+          Bi-normal &  0.2360 & 0.3427 \\
+     DeLong et. al. &  0.2470 & 0.3515 \\
+          Bootstrap &  0.2455 & 0.3453 \\
+        Upper Bound &  0.7725 & 0.6615 \\
+           Forecast &  0.9795 & 0.9259 \\
+
+
+    \hline
+
+    \end{tabular}
+
+    % \hline
+
+\end{center}
+
+    \footnotesize
+
+        \textbf{Rates of Coverage and Correct Forecasts:}
+        Coverage rates are the proportion of confidence intervals that contain the true values of the AUROC.
+        Correct forecast rates are the proportion of confidence intervals that contain the estimated values of the AUROC.
+        Number of replications is $1,000$ for all models, with $399$ bootstrap replications for bootstrap confidence intervals.
+        Data generating process is a two-state regime-switching model with a bi-normal classification model in each state,
+        with true AUROC values of $0.65$ in the low state and $0.75$ in the high state.
+        % Bi-normal models have standard deviations of $1/sqrt{2}$.
+        % Positive distributions have
+
+
+    % \hline
+
+
+
+\end{figure}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+

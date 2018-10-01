@@ -1,0 +1,7 @@
+\beamer@sectionintoc {2}{Introduction}{3}{0}{1}
+\beamer@sectionintoc {3}{Contribution}{9}{0}{2}
+\beamer@sectionintoc {4}{Method}{17}{0}{3}
+\beamer@subsectionintoc {4}{1}{Measuring Distance}{17}{0}{3}
+\beamer@subsectionintoc {4}{2}{Optimization Problem}{22}{0}{3}
+\beamer@subsectionintoc {4}{3}{Prediction Intervals}{25}{0}{3}
+\beamer@sectionintoc {5}{Conclusion}{27}{0}{4}

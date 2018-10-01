@@ -1,0 +1,134 @@
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Article:
+% Bootstrap Inference for the Area Under the ROC Curve
+% Appendix
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Distance to Distribution with AUROC $A_0$} \label{app:soln}
+% \section{The Nearest Distribution Satisfying $H_0: A = A_0$} \label{app:soln}
+
+The objective is to minimize distance 
+$D(\mathbf{u} \otimes \mathbf{v},\mathbf{f} \otimes \mathbf{g})$, which could be either of the metrics $CHI(f_1, f_2)$ or $KLD(f_1, f_2)$ or any other measure of distance between distributions, such that the chosen distribution corresponds to a specified AUROC statistic.
+% 
+% The estimation solves the following optimization problem.
+% $D(\mathbf{u} \otimes \mathbf{v},\mathbf{f} \otimes \mathbf{g})$
+The optimization problem is formalized as follows. 
+% 
+\begin{equation}
+    % Q(\mathbf{u},\mathbf{v},\mathbf{f},\mathbf{g},\cdot) =
+    \min_{\mathbf{u},\mathbf{v}}
+        D(\mathbf{u} \otimes \mathbf{f}, \mathbf{v} \otimes \mathbf{g})
+\end{equation}
+\noindent subject to
+\begin{equation}
+    \frac{1}{m n} \sum_{i = 1}^{m} \sum_{j = 1}^{n} u_i v_j I_{\left\{ y_j > x_i \right\}} = A_0,
+\end{equation}
+\noindent and the conditions on the probabilities
+\begin{equation}
+    \sum_{i = 1}^{m} u_i = 1, \quad \sum_{j = 1}^{n} v_j = 1, \quad \left\{ u_i \geq 0 \right\}_{i=1}^{m}, \quad \left\{ v_j \geq 0 \right\}_{j=1}^{n}.
+\end{equation}
+
+Stated as a Lagrange optimization problem, this becomes
+\begin{align}
+    \min_{\mathbf{u},\mathbf{v}} & Q(\mathbf{u},\mathbf{v}, \mathbf{f},\mathbf{g},
+    \gamma_x,\gamma_y,\mathbf{\delta}_{x},\mathbf{\delta}_{y}) \\
+    & = \min_{\mathbf{u},\mathbf{v}}
+        D(\mathbf{u} \otimes \mathbf{f}, \mathbf{v} \otimes \mathbf{g}) \\
+    &           - \lambda \left[ \frac{1}{m n} \sum_{i = 1}^{m} \sum_{j = 1}^{n} u_i v_j I_{\left\{ y_j > x_i \right\}} - A_0 \right] \\
+    &           - \gamma_x \left[ \sum_{i = 1}^{m} u_i - 1 \right]
+                - \gamma_y \left[ \sum_{j = 1}^{n} v_j - 1 \right]
+                - \sum_{i = 1}^{m} \delta_{x,i} u_i
+                - \sum_{j = 1}^{n} \delta_{y,j} v_j
+\end{align}
+% 
+\noindent The first order conditions for this problem are
+\begin{equation}
+    \frac{d D(\mathbf{u},\mathbf{f})}{d u_i} = \lambda \sum_{j = 1}^{n} v_j I_{\left\{ y_j > x_i \right\}} + \gamma_x + \delta_{x,i},
+    i = 1, \dots, m,
+\end{equation}
+and
+\begin{equation}
+    \frac{d D(\mathbf{v},\mathbf{g})}{d v_j} = \lambda \sum_{i = 1}^{m} u_i I_{\left\{ y_j > x_i \right\}} + \gamma_y + \delta_{y,i},
+    j = 1, \dots, n.
+\end{equation}
+% 
+% 
+\noindent For $D(f_1, f_2) = KLD_1(f_1, f_2)$ the distance function has terms of the form
+\begin{equation}
+    D(\mathbf{u}_i, \mathbf{f}_i) = u_i \ln \left\{ \frac{u_i}{f_i} \right\}
+\end{equation}
+\noindent so the derivative term is
+\begin{equation}
+    \frac{d D(\mathbf{u},\mathbf{f})}{d u_i} = \ln \left\{ \frac{u_i}{f_i} \right\} - u_i\ln f_i - 1.
+\end{equation}
+% 
+% This can be solved as
+% 
+Note that the nonnegativity constraints are not binding in the case of the Kullback-Leibler metric,
+since the probability weights in $\mathbf{u}$ and $\mathbf{v}$ appear within the natural log function.
+Setting these to zero would result in an infinite distance, 
+meaning that they provide absolute information for discriminating between distributions. 
+% (as in infinite information for discriminating between the distributions).
+As a result, the Lagrange multipliers $\left\{ \delta_{x,i} \right\}_{i=1}^{m}$ and $\left\{ \delta_{y,_j} \right\}_{j=1}^{n}$ are all equal to zero.
+
+The first order conditions can be solved to isolate $u_i$ and $v_j$ so that they satisfy the following fixed points.
+\begin{equation}
+    u_i = \exp{ \left\{ 1 + \ln f_i + u_i \ln f_i
+                + \lambda \sum_{j = 1}^{n} v_j I_{\left\{ y_j > x_i \right\}} + \gamma_x \right\} },
+\end{equation}
+\noindent and
+\begin{equation}
+    v_j = \exp{ \left\{ 1 + \ln g_j + v_j \ln g_j
+                + \lambda \sum_{i = 1}^{m} u_i I_{\left\{ y_j > x_i \right\}} + \gamma_y \right\} }.
+\end{equation}
+
+Note that this system of equations has dimension equal to the respective sample sizes, which could make the solution prohibitively costly to compute.
+To this end, one can iterate on the fixed point implied by the above:
+\begin{equation}
+    u_i^{(t+1)} = k_x f_i ^{1 + u_i^{(t)}}
+                \exp{ \left\{ \lambda \sum_{j = 1}^{n} v_j^{(t)} I_{\left\{ y_j > x_i \right\}} \right\} },
+\end{equation}
+and
+\begin{equation}
+    v_j^{(t+1)} = k_y g_j ^{1 + v_j^{(t)}}
+                \exp{ \left\{ \lambda \sum_{i = 1}^{m} u_i^{(t)} I_{\left\{ y_j > x_i \right\}}  \right\} }.
+\end{equation}
+
+
+
+
+Finally, the $\lambda$ could, in principle, be solved for numerically, on each iteration.
+However, it is sufficient to choose $\lambda$ so that it is small enough not to overstep the root of the fixed point.
+In addition, $\lambda$ determines the direction of the iterations, toward either higher or lower $A_0$.
+To this end, it is sufficient to set the step size as
+\begin{equation}
+    \lambda = \eta (\hat{A}^{(t)} - A_0),
+\end{equation}
+for a small $\eta$, so that the step size is declining at each iteration, as the AUROC $\hat{A}^{(t)}$ moves in the direction of the specified value of $A_0$.
+The iterations continue until the first order conditions are satisfied and the distance $|\hat{A}^{(t)} - A_0|$ is near zero, such that both conditions are met, up to a chosen tolerance.
+
+% \subsection{Efficient Calculation of the Optimal Weights}
+
+% Iterate over the contraction mapping.
+% Converges to a fixed point that satisfies the FOCs of minimum distance.
+
+
+
+
+% \section{Distribution of the Distance Metric}
+
+% Show that the distribution is Chi-squared.
+
+% Do that by starting from the distribution of the maximum likelihood estimator.
+
+
+
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
