@@ -2,7 +2,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Article:
 % Bootstrap Inference for the Area Under the ROC Curve
-% Appendix
+% Appendix: Detailed Solution
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Distance to Distribution with AUROC $A_0$} \label{app:soln}
@@ -92,9 +92,10 @@ To this end, one can iterate on the fixed point implied by the above:
 and
 \begin{equation}
     v_j^{(t+1)} = k_y g_j ^{1 + v_j^{(t)}}
-                \exp{ \left\{ \lambda \sum_{i = 1}^{m} u_i^{(t)} I_{\left\{ y_j > x_i \right\}}  \right\} }.
+                \exp{ \left\{ \lambda \sum_{i = 1}^{m} u_i^{(t)} I_{\left\{ y_j > x_i \right\}}  \right\} },
 \end{equation}
-
+% 
+\noindent where the constants $k_x$ and $k_y$ serve to normalize to unit probability mass.
 
 
 

@@ -1,7 +1,10 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6745 64-bit) (preloaded format=pdflatex 2018.8.17)  28 SEP 2018 16:36
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6745 64-bit) (preloaded format=pdflatex 2018.8.17)  26 DEC 2018 13:27
 entering extended mode
-**./PredAUROC.tex
-(PredAUROC.tex
+**C:/Users/le279259/Documents/Research/CIforAUROC/CI_for_AUROC/Article/PredAURO
+C.tex
+
+(C:/Users/le279259/Documents/Research/CIforAUROC/CI_for_AUROC/Article/PredAUROC
+.tex
 LaTeX2e <2018-04-01> patch level 5
 
 ("C:\Users\le279259\AppData\Local\Programs\MiKTeX 2.9\tex\latex\base\article.cl
@@ -169,7 +172,11 @@ Package: natbib 2010/09/13 8.31b (PWD, AO)
 \bibsep=\skip53
 LaTeX Info: Redefining \cite on input line 694.
 \c@NAT@ctr=\count108
-) (PredAUROC.aux)
+) (PredAUROC.aux
+
+LaTeX Warning: Label `eqn:auroc' multiply defined.
+
+)
 \openout1 = `PredAUROC.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 120.
@@ -266,43 +273,17 @@ G,.JBIG2,.JB2,.eps]
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: subfig package v1.3 is loaded.
 Package caption Info: End \AtBeginDocument code.
- (Text/PredAUROCabstract1.tex) (Text/PredAUROCintro1.tex [1
+ (Text/PredAUROCabstract1.tex) (Text/PredAUROCintro2.tex [1
 
 {C:/Users/le279259/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}] [2] [3])
 
-(Text/PredAUROCtheory2.tex [4] (Figs/ROC/FigsROCcurve1.tex
-<Figs/ROC/ROC_curve_3.png, id=20, 301.8778pt x 194.22563pt>
-File: Figs/ROC/ROC_curve_3.png Graphic file (type png)
-<use Figs/ROC/ROC_curve_3.png>
-Package pdftex.def Info: Figs/ROC/ROC_curve_3.png  used on input line 11.
-(pdftex.def)             Requested size: 226.40779pt x 145.66885pt.
-) [5 <./Figs/ROC/ROC_curve_3.png>] (Figs/Volume/FigsVolume1.tex
-<Figs/Volume/AUROC_vol_3.png, id=31, 381.67593pt x 259.7203pt>
-File: Figs/Volume/AUROC_vol_3.png Graphic file (type png)
-<use Figs/Volume/AUROC_vol_3.png>
-Package pdftex.def Info: Figs/Volume/AUROC_vol_3.png  used on input line 11.
-(pdftex.def)             Requested size: 190.8375pt x 129.85983pt.
+(Text/PredAUROCtheory4.tex
+Underfull \hbox (badness 10000) in paragraph at lines 25--26
 
+ []
 
-LaTeX Warning: `!h' float specifier changed to `!ht'.
-
-) [6] (Figs/Classification/FigsClassification2.tex
-<Figs/Classification/LogisticReg_5.png, id=37, 284.56313pt x 219.06844pt>
-File: Figs/Classification/LogisticReg_5.png Graphic file (type png)
-<use Figs/Classification/LogisticReg_5.png>
-Package pdftex.def Info: Figs/Classification/LogisticReg_5.png  used on input l
-ine 8.
-(pdftex.def)             Requested size: 211.38832pt x 162.74321pt.
-<Figs/Classification/ROC_distns_1.png, id=38, 284.56313pt x 219.06844pt>
-File: Figs/Classification/ROC_distns_1.png Graphic file (type png)
-<use Figs/Classification/ROC_distns_1.png>
-Package pdftex.def Info: Figs/Classification/ROC_distns_1.png  used on input li
-ne 15.
-(pdftex.def)             Requested size: 211.38832pt x 162.74321pt.
-) [7 <./Figs/Volume/AUROC_vol_3.png>] [8 <./Figs/Classification/LogisticReg_5.p
-ng> <./Figs/Classification/ROC_distns_1.png>]) (Text/PredAUROCsoln2.tex [9] [10
-] (Figs/KLD/FigsKLDdist1.tex
-<Figs/KLD/KLD_calc_3.png, id=57, 361.35pt x 323.70938pt>
+[4] [5]) (Text/PredAUROCsoln3.tex [6] [7] (Figs/KLD/FigsKLDdist1.tex
+<Figs/KLD/KLD_calc_3.png, id=38, 361.35pt x 323.70938pt>
 File: Figs/KLD/KLD_calc_3.png Graphic file (type png)
 <use Figs/KLD/KLD_calc_3.png>
 Package pdftex.def Info: Figs/KLD/KLD_calc_3.png  used on input line 11.
@@ -311,9 +292,9 @@ Package pdftex.def Info: Figs/KLD/KLD_calc_3.png  used on input line 11.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-) [11] [12 <./Figs/KLD/KLD_calc_3.png>] [13]) (Text/PredAUROCsims1.tex [14]
-[15] (Figs/Forecast/FigsForecast1.tex
-<Figs/Forecast/Forecast_int_1.png, id=76, 481.8pt x 481.8pt>
+) [8] [9 <./Figs/KLD/KLD_calc_3.png>] [10]) (Text/PredAUROCsims2.tex [11]
+[12] (Figs/Forecast/FigsForecast1.tex
+<Figs/Forecast/Forecast_int_1.png, id=58, 481.8pt x 481.8pt>
 File: Figs/Forecast/Forecast_int_1.png Graphic file (type png)
 <use Figs/Forecast/Forecast_int_1.png>
 Package pdftex.def Info: Figs/Forecast/Forecast_int_1.png  used on input line 1
@@ -323,48 +304,83 @@ Package pdftex.def Info: Figs/Forecast/Forecast_int_1.png  used on input line 1
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-) [16] [17 <./Figs/Forecast/Forecast_int_1.png>]
+) [13] [14 <./Figs/Forecast/Forecast_int_1.png>]
 (Tabs/TabsCoverage/TabsCoverageFull1.tex
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-)) (Text/PredAUROCconc1.tex [18] [19]) (PredAUROC.bbl [20] [21])
-(Text/PredAUROCapp1.tex [22] [23]) [24] (PredAUROC.aux) ) 
+) [15]) (Text/PredAUROCconc2.tex [16] [17]) (PredAUROC.bbl [18])
+(Text/PredAUROCappAUROC1.tex [19] (Figs/ROC/FigsROCcurve1.tex
+<Figs/ROC/ROC_curve_3.png, id=86, 301.8778pt x 194.22563pt>
+File: Figs/ROC/ROC_curve_3.png Graphic file (type png)
+<use Figs/ROC/ROC_curve_3.png>
+Package pdftex.def Info: Figs/ROC/ROC_curve_3.png  used on input line 11.
+(pdftex.def)             Requested size: 226.40779pt x 145.66885pt.
+) [20 <./Figs/ROC/ROC_curve_3.png>] (Figs/Volume/FigsVolume1.tex
+<Figs/Volume/AUROC_vol_3.png, id=91, 381.67593pt x 259.7203pt>
+File: Figs/Volume/AUROC_vol_3.png Graphic file (type png)
+<use Figs/Volume/AUROC_vol_3.png>
+Package pdftex.def Info: Figs/Volume/AUROC_vol_3.png  used on input line 11.
+(pdftex.def)             Requested size: 190.8375pt x 129.85983pt.
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+) [21] [22 <./Figs/Volume/AUROC_vol_3.png>]
+(Figs/Classification/FigsClassification2.tex
+<Figs/Classification/LogisticReg_5.png, id=99, 284.56313pt x 219.06844pt>
+File: Figs/Classification/LogisticReg_5.png Graphic file (type png)
+<use Figs/Classification/LogisticReg_5.png>
+Package pdftex.def Info: Figs/Classification/LogisticReg_5.png  used on input l
+ine 8.
+(pdftex.def)             Requested size: 211.38832pt x 162.74321pt.
+<Figs/Classification/ROC_distns_1.png, id=100, 284.56313pt x 219.06844pt>
+File: Figs/Classification/ROC_distns_1.png Graphic file (type png)
+<use Figs/Classification/ROC_distns_1.png>
+Package pdftex.def Info: Figs/Classification/ROC_distns_1.png  used on input li
+ne 15.
+(pdftex.def)             Requested size: 211.38832pt x 162.74321pt.
+)) (Text/PredAUROCappSoln1.tex
+[23 <./Figs/Classification/LogisticReg_5.png> <./Figs/Classification/ROC_distns
+_1.png>] [24]) [25] (PredAUROC.aux)
+
+LaTeX Warning: There were multiply-defined labels.
+
+ ) 
 Here is how much of TeX's memory you used:
- 3841 strings out of 492973
- 61268 string characters out of 3125363
- 133382 words of memory out of 3000000
- 7615 multiletter control sequences out of 15000+200000
+ 3847 strings out of 492973
+ 61639 string characters out of 3125363
+ 133442 words of memory out of 3000000
+ 7616 multiletter control sequences out of 15000+200000
  13197 words of font info for 47 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 44i,11n,46p,413b,334s stack positions out of 5000i,500n,10000p,200000b,50000s
-<C:/Users/le279259/App
-Data/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Us
-ers/le279259/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/c
-mbx12.pfb><C:/Users/le279259/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/publ
-ic/amsfonts/cm/cmbx8.pfb><C:/Users/le279259/AppData/Local/Programs/MiKTeX 2.9/f
-onts/type1/public/amsfonts/cm/cmcsc10.pfb><C:/Users/le279259/AppData/Local/Prog
-rams/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Users/le279259/Ap
-pData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/U
-sers/le279259/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/
-cmmi12.pfb><C:/Users/le279259/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/pub
-lic/amsfonts/cm/cmmi6.pfb><C:/Users/le279259/AppData/Local/Programs/MiKTeX 2.9/
-fonts/type1/public/amsfonts/cm/cmmi7.pfb><C:/Users/le279259/AppData/Local/Progr
-ams/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi8.pfb><C:/Users/le279259/AppD
-ata/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/User
-s/le279259/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr
-12.pfb><C:/Users/le279259/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/
-amsfonts/cm/cmr17.pfb><C:/Users/le279259/AppData/Local/Programs/MiKTeX 2.9/font
-s/type1/public/amsfonts/cm/cmr6.pfb><C:/Users/le279259/AppData/Local/Programs/M
-iKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Users/le279259/AppData/Lo
-cal/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Users/le279
-259/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb
+ 44i,11n,46p,480b,334s stack positions out of 5000i,500n,10000p,200000b,50000s
+<C:/Users/le279259/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfo
+nts/cm/cmbx10.pfb><C:/Users/le279259/AppData/Local/Programs/MiKTeX 2.9/fonts/ty
+pe1/public/amsfonts/cm/cmbx12.pfb><C:/Users/le279259/AppData/Local/Programs/MiK
+TeX 2.9/fonts/type1/public/amsfonts/cm/cmbx8.pfb><C:/Users/le279259/AppData/Loc
+al/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmcsc10.pfb><C:/Users/le2
+79259/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmex10.p
+fb><C:/Users/le279259/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsf
+onts/cm/cmmi10.pfb><C:/Users/le279259/AppData/Local/Programs/MiKTeX 2.9/fonts/t
+ype1/public/amsfonts/cm/cmmi12.pfb><C:/Users/le279259/AppData/Local/Programs/Mi
+KTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi6.pfb><C:/Users/le279259/AppData/Lo
+cal/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi7.pfb><C:/Users/le27
+9259/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi8.pfb
 ><C:/Users/le279259/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfon
-ts/cm/cmsy8.pfb><C:/Users/le279259/AppData/Local/Programs/MiKTeX 2.9/fonts/type
-1/public/amsfonts/cm/cmti12.pfb>
-Output written on PredAUROC.pdf (24 pages, 460275 bytes).
+ts/cm/cmr10.pfb><C:/Users/le279259/AppData/Local/Programs/MiKTeX 2.9/fonts/type
+1/public/amsfonts/cm/cmr12.pfb><C:/Users/le279259/AppData/Local/Programs/MiKTeX
+ 2.9/fonts/type1/public/amsfonts/cm/cmr17.pfb><C:/Users/le279259/AppData/Local/
+Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr6.pfb><C:/Users/le279259/
+AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/U
+sers/le279259/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/
+cmr8.pfb><C:/Users/le279259/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/publi
+c/amsfonts/cm/cmsy10.pfb><C:/Users/le279259/AppData/Local/Programs/MiKTeX 2.9/f
+onts/type1/public/amsfonts/cm/cmsy8.pfb><C:/Users/le279259/AppData/Local/Progra
+ms/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti12.pfb>
+Output written on PredAUROC.pdf (25 pages, 466124 bytes).
 PDF statistics:
- 167 PDF objects out of 1000 (max. 8388607)
+ 171 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  31 words of extra memory for PDF output out of 10000 (max. 10000000)
 

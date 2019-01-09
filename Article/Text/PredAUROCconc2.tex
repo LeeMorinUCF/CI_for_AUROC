@@ -1,0 +1,156 @@
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Article:
+% Bootstrap Inference for the Area Under the ROC Curve
+% Conclusion
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Conclusion}
+
+
+% \subsection{Summary}
+
+%What I did and why it satisfies an appetite for this method.
+%
+%\textbf{A Practical Solution}
+%
+%In practice
+%\begin{itemize}
+%    \item Appetite to compare AUROC stats for classification models
+%    \begin{itemize}
+%        \item between samples: indicate drop potential
+%        \item between models: comparison of predictive value
+%    \end{itemize}
+%    \item Often surprising how far AUROC can move over time
+%    \item Question Answered here: \\
+%        Can we predict likely range for \emph{future} AUROC?
+%    \item
+%\end{itemize}
+
+
+The technique presented in this paper has answered a question of interest to the applied researcher.
+Practitioners have long been aware of the statistical techniques for estimating the variance of an AUROC statistic from a fixed population.
+The applicability in practice has, however, been less fruitful.
+In the practical application of such empirical techniques, one often finds a substantial increase in variability, compared to that expected from the existing approaches.
+When one takes into account the variation induced by changes in the population, the existing techniques fall short and the distance-based forecast interval method
+% comes into it's own.
+fills this requirement.
+
+Practitioners now have a method that will give a reasonable indication of the drop in AUROC that may be experienced from a shift in the population.
+This technique can also be used to provide a more realistic assessment of the performance expected from competing models.
+A difference between competing models may be statistically significant for the fixed population under study but one may find that a performance difference between models is much less important than a change in the population.
+The practitioner might be surprised by a performance change in the application of a model, but this work should serve to mitigate the element of surprise.
+The key question that is answered refers to the performance of \emph{future} applications of the model.
+
+
+% \textbf{Future Research}
+
+%Next steps:
+%\begin{itemize}
+%    \item Using distance to specify a confidence interval
+%    \begin{itemize}
+%        \item requires mapping to $95\%$ confidence interval
+%    \end{itemize}
+%    \item Bootstrap test statistic
+%    \begin{itemize}
+%        \item Shift weight to closest distribution with $A = A_0$
+%        \item Simulating from this distribution will satisfy the null hypothesis
+%        \item Reject null if actual statistic is in tails of simulated distribution
+%    \end{itemize}
+%    \item Extend to multiple samples
+%    \begin{itemize}
+%        \item Classification variables from same population
+%        \item Need to account for covariance
+%    \end{itemize}
+%\end{itemize}
+
+
+% \subsection{Bootstrap Methods}
+
+
+This piece of work opens up several avenues of future research.
+The first of which employs the use of the bootstrap.
+The existing bootstrap technique considered in this paper, presented in \citet{proc2011}, is a simple approach to simulating the estimated AUROC.
+By resampling from the observed sample, the variation is not only limited to sampling variation but it is also limited to the data observed from the data generating process.
+It does not, however, impose a null hypothesis that may be the focus of a test.
+
+Using the distance-based approach presented here,
+the researcher can solve for the closest distribution that satisfies a null hypothesis of the form $H_0: A = A_0$.
+Resampling methods can then be applied to this re-weighted distribution, which will produce results that correspond to a data generating process under the null hypothesis.
+This can then be used to calculate test statistics of the form presented in \citet{davidson2008}, for example.
+\citet{davidson2008} can easilty be extended to the AUROC, since it is designed for the Gini index, which is mathematically similar to one calculation method for the AUROC.
+The test statistic can be simulated under the null hypothesis and the researcher would reject the null if the estimated values from the observed sample appear unlikely under the null hypothesis.
+
+
+% \subsection{Multiple AUROC statistics}
+
+
+This approach can also be extended to multivariate comparisons between competing classification models.
+A null hypothesis of equal model performance can be imposed and one can
+solve for the closest pair of distributions to those observed.
+With resampling done in this way, the variability in the difference in performance in each test can be similarly used to evaluate the performance in the observed sample.
+%
+This sort of analysis would serve as the distance-based version of the tests discussed in \citet{hanleymcneil1983}, in which pairs of classification models are considered.
+Such comparisons can now be used to anticipate relative performance levels in future applications of the model.
+
+
+
+% \subsection{Bootstrap Methods}
+
+
+% Bootstrap statistics are calculated in \citet{proc2011}, using the approach of (reference: Carpenter).
+
+
+
+% Refer to \citet{davidson2008} for a similar approach to bootstrapping the Gini index.
+
+
+% These approaches don't impose the null hypothesis, however.
+% This is now possible, given the approach presented to calculate the distance between the empirical distribution and the closest that satisfies the null hypothesis.
+
+
+%\subsection{Multiple AUROC statistics}
+%
+%For comparing AUROC for the same set of cases (bound to be correlated), see \citet{hanleymcneil1983}.
+%
+%{\Large Note: This depends on whether the scores are associated with the same dataset}
+%
+%
+%\subsubsection{Separate datasets}
+%
+%This version requires two datasets of the same sort, each with a competing version of a score for use in a classification model.
+%
+%The approach taken here is to impose the null of equal AUROC by finding the intermediate value of AUROC, such that the total distance between the two pairs distributions are minimized.
+%It involves an extra one-dimensional optimization, over the separate recursions of optimization for each of the competing datasets.
+%
+%
+%\subsubsection{Same dataset}
+%
+%{\large Not sure what to do here, yet.}
+%
+%It may involve a re-weighting of observations, such that the AUROCs are as close as possible.
+%
+%This adds an extra degree of complexity:
+%In the one-score case, the recursion simply shifts weight in the tails (for higher AUROC) or toward overlapping in the centre (for lower AUROC).
+%In the two-score case on the same dataset, it is possible to match AUROCs by considering only the observations, such that the rankings agree just as often. This can possibly be achieved by zeroing out observations that disagree, until the number of
+%
+%It depends on what happens with the recurrence equations.
+%Calculate the contraction mapping with the extra term from the opposing distribution, except that distance is minimized while distance between AUROCs are set to zero (a second term arises).
+%Check the chi-squared case first to prove existence (or conditions therefor).
+%Then plot the AUROC paths until they cross, if ever, or stop when they are closest (second best).
+
+
+
+% \subsubsection{Final Words}
+
+% Where practice needs a solution.
+
+While the use of the AUROC began as a tool for analyzing radio transmissions for military applications, the competition is no less intense in business.
+Classification models are used in a variety of business applications and their performance is closely scrutinized.
+The forecasting approach presented here will bring about improvements in the way classification methods are used in business decisions.
+The ability to use these methods effectively will determine the winners on the industrial battlefield.
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

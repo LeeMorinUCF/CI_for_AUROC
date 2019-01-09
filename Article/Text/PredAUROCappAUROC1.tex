@@ -1,0 +1,196 @@
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Article:
+% Bootstrap Inference for the Area Under the ROC Curve
+% Appendix: Background for the AUROC
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Area Under the ROC Curve} \label{app:auroc}
+
+
+The ROC curve is a parametric curve, plotting the true positive rate against the false positive rate.
+The curve is parameterized by the discrimination threshold, the value of the classification variable, above which observations are classified as positive.
+A particular point on this curve shows the performance of the classification, plotting the observations correctly classified as positive, against those that are classified as positive but are truly negative.
+
+The result can be used as a measurement of the frequency of correct interpretation of a signal for predicting a binary element of a message.
+In fact, the use of this curve for a measure of signal quality dates back to
+% the days of assessing
+the measurement of
+the quality of radio transmissions for military use.
+Early academic references include \citet{peterson1954}, \citet{vanmeter1954} and \citet{wald1949} for uses in this context.
+A later review can be found in \citet{hanley1989}, in which the statistic is used to assess the quality of medical diagnoses.
+Recently, this curve has been used by the business community to assess the discriminatory power of variables used in classification models for predictive modeling.
+
+Figure \ref{fig:ROCcurve1} shows an example of the Receiver Operating Characteristic curve.
+It plots the True Positive Rate (TPR) on the vertical axis against the False Positive Rate (FPR) on the horizontal axis.
+These proportions are calculated for a particular value of the classification threshold, which the user can vary to make a classification more selective or more inclusive.
+The observations with classification variable above the classification threshold are classified as positive and the rates are then calculated according to whether that classification is correct in each case.
+In the bottom left corner, only the strongest signals are used to identify positive outcomes and, for an effective model, the ratio of correct to incorrect positive identifications should be greater than equal, implying a steeper slope.
+As the threshold is increased, progressively weaker signals are used to identify positive outcomes and the performance should decline, resulting in a declining slope.
+At the other extreme, the classification threshold will include nearly the entire sample, for which the accuracy will have declined enough to coincide with the sample-wide event rates.
+
+\input{Figs/ROC/FigsROCcurve1.tex}
+
+The better the model, the steeper will be the initial slope and the closer the curve will be to the upper boundaries.
+The area under this curve is the statistic that indicates the performance value of the classification variable.
+The diagonal line indicates the classifications that are no better than random allocation to positives and negatives.
+In this locus, the event rate is simply the average event rate for the entire sample.
+A model with a curve below this line is not effective in classifying, unless used in reverse order, when the curve will then lie within the upper triangular region.
+
+% \subsection{Area Under the ROC Curve}
+
+The area under this curve can be computed directly by integration:
+%
+\begin{equation}
+    A = \int_{-\infty}^{\infty} TPR(t) [-FPR^{\prime}(t)] dt,
+\end{equation}
+%
+\noindent in which the true and false positive rates are defined as
+%
+\begin{equation}
+    TPR(t) = \int_{t}^{\infty} g_y(t) dt, \quad FPR(t) = \int_{t}^{\infty} f_x(t) dt.
+\end{equation}
+%
+The observations of the classification variable corresponding to positive outcomes is denoted by $y$ and that for negative outcomes is denoted by $x$. The functions $g_y(\cdot)$ and $f_x(\cdot)$ are the corresponding density functions.
+%
+A brief series of calculations will reveal this to be equivalent to the following probability
+%
+\begin{equation}
+    A = Prob{\left\{ y > x \right\}}.
+\end{equation}
+%
+
+
+% Duplicate paragraph in text
+
+This can be interpreted as an evaluation of a pairwise comparison of the correct ordering of predictions for all pairs of predictions that could be made in the sample.
+%
+Specifically, if one were to pick a pair of predictions, drawn randomly from predictions corresponding to pairs of the positive ($y$) and the negative ($x$) outcomes, the AUROC is the probability that these predictions are correctly ordered.
+%
+The sample analogue is calculated as follows
+%
+\begin{equation} \label{eqn:auroc}
+    \hat{A} = \hat{\Pr} \{ y > x \} = \frac{1}{m n} \sum_{i = 1}^{m} \sum_{j = 1}^{n} I_{\left\{ y_j > x_i \right\}}.
+\end{equation}
+%
+
+This calculation is provided in \citet{hanleymcneil1982}, while an implementation of the calculation is made available in \citet{proc2011}.
+This is an implementation of the approach taken in \citet{delong1988}.
+%
+A more efficient method of computation is proposed by \citet{sunxu2014}, which is a faster approach to calculating
+these quantities.
+% the quantities in \citet{hanleymcneil1982} (check reference), as well as those for \citet{delong1988}.
+%
+
+
+
+
+
+% Continue with description...
+
+% \subsection{Volume interpretation}
+
+% Volume Under the Joint distribution of Predictor Variables
+
+A more intuitive approach to the calculation of the AUROC is to visualize it as the probability mass that satisfies a certain condition.
+Consider the following joint distribution formed by the two groups of classification variables.
+Combine the marginal distributions of the classification variables corresponding to the positive and negative outcomes by simply multiplying the marginal distributions.
+The resulting joint density will represent the probability density of all possible $(x,y)$ pairs from the sample.
+Now restrict this space to the region defined by the indicator in equation (\ref{eqn:auroc}), which is the region above the $y = x$ line.
+The area under the receiver operating curve is the volume under this ``receiver operating surface'' shown in Figure \ref{fig:volume1}.
+
+% This binormal approach is discussed next.
+
+% \input{Figs/Binormal/FigsBinormal1.tex}
+\input{Figs/Volume/FigsVolume1.tex}
+
+
+
+\subsection{Examples}
+
+% \textbf{Binormal Model}
+
+Figure \ref{fig:volume1} also illustrates the calculation of the AUROC for the specific case of the bi-normal model.
+The calculation is known to be equivalent to the normal CDF evaluated at the value of a test statistic for testing the difference between the two normal distributions.
+Similarly, the variability of the estimate results in confidence bounds that are also calculated by the normal CDF, which is specified in \citet{demidenko2012}.
+However, it is noteworthy that the AUROC statistic is a function of the test statistic for a test of the difference between the pair of distributions of classification variables.
+%
+
+% \textbf{Biexponential Model}
+
+Another possibility is the bi-exponential model, in which both sets of classification variables are drawn from exponential distributions.
+%
+This alternative is featured in \citet{hanleymcneil1982} for a calculation of the variance of the AUROC.
+This approach allows for a more generic formulation that is calculated directly from the empirical distributions of the classification variables from both the positive and negative outcomes.
+%
+
+
+% (Almost) Duplicate paragraph:
+
+% Here, it transitions to the talk of ranking
+% In the text, it appeals to nonparametric modeling approaches.
+
+Features of these two examples can be extended to the study of generic models for classification.
+However, parametric solutions are not preferred in the literature, since the classification model is likely to be much more unstructured than a parametric model would allow.
+A nonparametric solution is not only possible but preferred by users in industry.
+Regardless of the particular model employed in practice, the parametric examples can still be used to explain an important correspondence between modeling methods.
+The mapping presented next is generalized to all classification models.
+
+\subsection{Equivalence to Ranking Statistics}
+
+% \subsection{An important correspondence}
+
+% Predicting Outcomes vs. Measuring Difference
+
+There is an important similarity between the act of creating a classification model and that of comparing two distributions.
+%
+A difference between the distributions is a necessary condition for a classification variable to have predictive power for the binary outcome.
+Conversely, if the classification variable produces predictions with an AUROC above $0.5$, then the distributions must be different.
+%
+For this reason, an important connection can be made between nonparametric statistics and the AUROC, and this connection is useful for finding ways to further characterize the AUROC.
+
+% \input{Figs/Classification/FigsClassification1.tex}
+\input{Figs/Classification/FigsClassification2.tex}
+
+
+
+
+% \subsection{Equivalence to Ranking Statistics}
+
+Because of this close connection between statistical methodologies, a number of methods in the nonparametric literature are useful for analyzing the AUROC.
+Nonparametric ranking statistics are described in \citet{lehmann2006} and \citet{kendall1990}, in reference to the literature on the comparison of distributions.
+One method that stands out as especially relevant is the
+Mann-Whitney $U$-statistic, which is presented in \citet{mannwhitney1947}, for comparing two distributions nonparametrically,
+%
+\begin{equation}
+    U = \sum_{i = 1}^{m} \sum_{j = 1}^{n} I_{\left\{ y_j > x_i \right\}}.
+\end{equation}
+%
+This is the same as AUROC, without the normalization by the count of pairs $m n$.
+
+This equivalence is leveraged for computational advantage, since the $U$-statistic is calculated as follows.
+First, sort the observations in increasing order.
+Then, assign ranks to the observations, with $1$ for the smallest score and the sample size for the observation with the largest score.
+Finally, take the sum of the ranks corresponding to the positive outcomes and subtract
+half of the quantity $n_1(n_1 + 1)$,
+% the quantity
+% \begin{equation}
+%     \frac{1}{2} n_1(n_1 + 1),
+% \end{equation}
+%
+\noindent where $n_1$ is the number of positive observations in the sample.
+%
+A similar statistic was proposed in \citet{wilcoxon1945} for similar purposes.
+% All of these
+% It was in
+\citet{bamber1975} made the connection between the AUROC and the Mann-Whitney $U$-statistic.
+Other approaches for evaluating classification models are similarly inspired by tools such as
+Somers' $d$ (\citet{somers1962}) and Kendall's $\tau$ (see \citet{kendall1990})
+A simulation-based approach to modeling the variability of these statistics is found in \citet{newson2006}, which involved jackknifing the numerator and denominator of the ratio in Kendall's $\tau$ and taking a Taylor expansion.
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

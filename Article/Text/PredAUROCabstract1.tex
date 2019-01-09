@@ -74,8 +74,11 @@ to characterize variability in the AUROC by allowing for additional variation in
 This additional variation corresponds to changes in the population over time.
 %
 Then, the variation is quantified by measuring the distance between joint distributions of subsamples from that of the full sample.
+% 
+Under this approach, distance is measured as the Kullback-Leibler divergence between the full sample and other potential samples. 
 %
-This provides an estimate of an interval for forecasting the value of the AUROC to be expected in future applications of the model.
+The extreme values of the AUROC statistics from distributions with the specified value of divergence
+provide an interval for forecasting the AUROC to be expected in future applications of the model.
 %
 
 %The variation in the predicted AUROC is characterized by allowing for a distance between the empirical distribution and distributions that may hold while the classification model is used out of sample.

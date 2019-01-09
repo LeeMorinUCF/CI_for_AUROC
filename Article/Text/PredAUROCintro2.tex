@@ -1,0 +1,155 @@
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Article:
+% Bootstrap Inference for the Area Under the ROC Curve
+% Introduction
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Introduction}
+
+
+% \textbf{Predicting Performance of Classification Models}
+
+The area under the receiver operating characteristic curve (AUROC) is a popular statistic for measuring the performance of a classification model.
+There are several approaches to calculate confidence intervals for the AUROC, each one with a set of distributional assumptions.
+However, practitioners are often concerned with the variability in model performance while the model is used in the future.
+After a model is built, the performance could be monitored until either the performance degrades or the sample becomes materially different from that on which the model was built.
+% 
+% 
+With this possibility, the AUROC statistic will demonstrate variation that is beyond that expected from sampling variability alone.
+This paper provides a solution to this problem, by proposing a method to calculate forecasting intervals for the area under the ROC curve.
+
+The variation in the predicted AUROC is characterized by allowing for some distance between the empirical distribution, on which the model is built, and future distributions that may hold while the classification model is used out of sample.
+The prediction interval is defined by solving for the values of the AUROC statistic that lie furthest from that of the observed sample but within a specified distance from the empirical distribution.
+These bounds of the interval are calculated by first
+% solving for the values that match
+solving for the distribution with
+% In essence, the procedure involves re-weighting the observations to
+% those of
+the closest data generating process
+% that satisfies the null hypothesis of a particular AUROC value.
+that produces a particular AUROC value.
+%
+Then the bounds are calculated as the upper and lower values of the AUROC that lie exactly the specified distance from the empirical distribution.
+
+
+In this context, distance is defined by using nonparametric test statistics for the difference between the joint distributions of the model predictions.
+%
+Distance is measured as the Kullback-Leibler divergence between candidate distributions. 
+Under this approach, the solution is characterized by a minimization of differential entropy to find the extreme values of AUROC statistics that correspond to the alternative distributions. 
+% under each of the positive and negative sets of observations.
+% Two distance metrics are analyzed, including the Chi-square statistic and an information-based criterion.
+% Under either approach,
+The underlying mechanism is a recursive algorithm for reallocation of sampling weights in the empirical distribution to the closest distribution with a specified value of AUROC.
+The algorithm solves for a set of fixed points that characterize the distribution,
+from which the extreme AUROC values are calculated, which define the bounds of the forecast interval.
+%
+%
+%
+Simulation exercises show the prediction intervals to have higher coverage rates than competing approaches that allow only for sampling variation.
+
+
+% \subsection{Introduction, more detail}
+
+%\textbf{What: Problem statement}
+%
+%The traditional stats approach restricts the amount of variation and underestimates the variability of AUROC.
+%Under such an approach, there is an implied assumption that the observed scores come from a fixed population (of positive and negative outcomes) and the AUROC measures the probability of an event, dependent on those distributions.
+%In a practical application of a model for decision-making, the distribution of the population will likely shift over time.
+%This shifting can have (profound) effects on the quality of the model.
+%In practice, when a model is employed, it is understood that the model will continue to be used as long as the population is reasonably similar.
+%Once the population shifts beyond a predetermined threshold, this will trigger a rebuild of the model to better describe the new population.
+%Thus, the relevant range of potential AUROC values is the set that could be observed from distributions within a set distance from the build population.
+%
+%\textbf{What: The solution here}
+%
+%In this article, the variability of the distributions is used to drive the expected variation in AUROC, beyond that resulting from the usual sampling variation.
+%The result is a more variable estimate than the traditional approach would dictate.
+%Overall, I am measuring the amount of variation that would go undetected by a distance metric from the reference distribution.
+%It is the variation in model performance that could possibly occur before triggering a model rebuild.
+
+% \textbf{Why: Examples}
+
+% Motivate with economic examples with classification models.
+Many examples of classification models are employed in the physical sciences, in economics, and in business decision-making.
+The AUROC statistic is often used to compare the quality of estimates from different competing models.
+In predictive modeling competitions, the competitors are often evaluated on the AUROC obtained on a holdout sample.
+% Point out the fact that kaggle competitions are routinely decided on the second or third decimal.
+In many such competitions, the winners are routinely decided on the second or third decimal.
+This is a true reflection of the reality in business, in which it is often the case that competing models are close competitors.
+It is in the interest of business decision-makers to determine the optimal investment in model-building efforts,
+such that the return to a more complex model is justified by the added predictive performance and the resulting value so generated.
+Quite often, small improvements in model performance can generate high values.
+
+% \textbf{Why fix it: Variation}
+
+However, there is often a drop in performance when the model is used out of sample, possibly indicating a degree of overfitting.
+Even when measures are taken to mitigate the effects of overfitting,
+model performance can degrade substantially.
+%  there can be a substantial (drop in performance).
+Moreover, the performance of a model, at first use, can result in an AUROC well outside the calculated standard error bounds when used out of sample.
+This erodes the interpretation of a confidence interval as the set that is likely to contain the true AUROC value, when calculated this way in repeated samples.
+When the repeated samples are drawn from a shifting distribution, the observed AUROC will lie outside the stated interval more often than is suggested by the significance level specified in traditional methods.
+The approach taken here allows for some degree of variation in the distribution of variables, in addition to sampling variation arising from a fixed distribution.
+% In order to identify a set of admissible distributions, a distance metric must be specified.
+In order to measure this variation, an allowable distance is specified along with the classification model.
+
+% \textbf{How: Distance metric}
+
+A common approach in business applications is to compare the distribution of explanatory variables until the distribution is statistically different from that in the original model build.
+When such a difference is found, it is often an indication that the model should be rebuilt.
+Such a difference can be detected by observing a statistically significant value of a statistic that follows the chi-squared distribution.
+In the case presented in this paper, the Kullback-Leibler information criterion (\citet{kullbackliebler1951}) is used, which has advantages over the most common alternatives.
+In particular, it places greater weight on deviations in regions with low probability density.
+It also affords computational advantages, in the sense that it automatically enforces boundaries for probability weights between the unit interval.
+Furthermore, it also naturally offers an interpretation in terms of the maximum likelihood estimation of the distribution in question. 
+Finally, the allowable distance between distributions is the maximum relative entropy allowable for the life of the model. 
+This statistic is discussed in Section \ref{sec:theory}.
+
+% \textbf{How: Variation in prediction intervals (what I do first)}
+
+Even without a significant change in the distribution of classification variables, such small changes can correspond to large changes in the measured AUROC.
+The difference in AUROC that can be observed for a particular change in distance is shown in Section \ref{sec:sims}, along with some competing techniques.
+A shift in AUROC may be reduced to a statistically significant
+deviation from a pre-specified distribution.
+% when measured in terms of the realization from a fixed set of distributions.
+However, such a shift could possibly correspond to a distribution that is quite a small distance from the reference distribution.
+In this case, one might conclude that such a change in AUROC is quite likely under a policy of replacing the model once the distribution crosses a farther threshold.
+The approach pursued in this article takes this variation into account.
+
+% \textbf{How: Other approaches to specifying confidence intervals (what others did for background)}
+
+
+A good deal of literature has involved the estimation of the variance of the AUROC.
+%
+A comparison of the performance of a variety of methods is presented in Section \ref{sec:sims}.
+%
+The early approaches among these were based on the assumption of a particular distribution.
+% Variety of approaches.
+Generally, the classification variable can be divided into two samples, corresponding to the positive and negative binary outcomes, with two separate distributions.
+In particular, these samples could be drawn from normal distributions, together forming a bi-normal classification model.
+This formulation allows for a calculation of the AUROC that implies confidence bounds that are functions of the normal CDF.
+These are augmented in \citet{demidenko2012} to account for variation in the estimates of the parameters.
+Another possibility is that the samples of classification variables are drawn from exponential distributions.
+As in the bi-normal case, the variance of the AUROC is calculated as functions of the parameters of the exponential distributions.
+\citet{hanleymcneil1982} presents a formulation of the variance for this model.
+This formulation allows for an expression that provides a more general form, in which statistics are calculated from the empirical distributions.
+This is further investigated in \citet{delong1988}, and is made computationally efficient in \citet{sunxu2014}.
+Each of these approaches involve making distributional assumptions that would be unreasonable to the practitioner.
+
+On another extreme, one could also consider an upper bound for the sampling variation in AUROC.
+This is calculated as the variance calculated over all possible distributions, as described in \citet{birn1957} and \citet{vandan1915}.
+% {\Large (Note: Something wrong with the date. Check reference. Fixed.)} 
+As the literature progresses, recent approaches emerge that impose certain assumptions about the future distribution,
+without imposing a rigid specification of the distribution itself.
+%
+In particular, \citet{cortezMohri2004} employed an approach that restricts the distribution to the set of all distributions
+that imply a fixed error rate of the classification model.
+This affords the user a tuning parameter that can be used to consider a wider array of situations in which the model may be used in practice.
+%
+This approach taken in the current paper follows this line of research, in that it allows for a particular kind of variation that drives the variability of the AUROC.
+%
+To put these calculations in proper context, a deeper explanation of the AUROC statistic itself is in order.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

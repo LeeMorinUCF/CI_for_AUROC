@@ -1,0 +1,190 @@
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Article:
+% Bootstrap Inference for the Area Under the ROC Curve
+% Statistical Theory
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+% \section{Background}
+\section{Environment}
+% \subsection{The ROC Curve}
+% \textbf{The ROC Curve}
+\subsection{Area Under the ROC Curve}
+
+
+The ROC curve characterizes the relationship between variables in a classification model.
+One one side is the categorical outcome, which, in this paper, is a binary indicator variable.
+The outcomes are referred to as positive or negative, according to whether the event occurs or does not.
+The other component is a classification variable.
+It is, ideally, monotonically related to the probability that the binary event will occur.
+The classification variable can be interpreted as a model prediction, which, for example, could include a credit score for the prediction of default.
+In practice, it is often the output of a classification model, which could range from standard models, such as logistic regression, to a variety of nonparametric classification algorithms and machine learning methods.
+
+{\Large Insert brief paragraph outlining main points} \\
+
+
+% {\Large Describe notation here}\\
+
+The classification model can be thought about in two ways. 
+From the modeler's perspective, there is a data set of two, variables. 
+One is the score $s$ or classification variable, which is often the prediction from a classification model, which could be a probability that an observation should belong to a certain class or a variable from outside, such as a credit score for predicting default probability. 
+The other variable is a binary outcome $z$, which indicates the positive or negative outcome of the realization. 
+
+This dataset can be divided into two distributions of the score $s$, depending on the corresponding binary outcome $z$. 
+The scores corresponding to the positive outcomes is represented by the series $y_j$ for $j = 1, \dots, n$. Similarly, the scores corresponding to the negative outcomes is represented by the series $x_i$ for $i = 1, \dots, m$.
+
+
+It is the difference between these distributions that determines the ability to build an effective predictive model. 
+Conversely, the act of building a classification model is akin to testing whether the distributions of $x$ and $y$ are different. 
+This is the situation discussed in the literature on ranking statistics used to discriminate between distributions. 
+
+% Section moved to appendix
+
+The AUROC can be interpreted as an evaluation of a pairwise comparison of the correct ordering of predictions for all pairs of predictions that could be made in the sample.
+%
+Specifically, if one were to pick a pair of predictions, drawn randomly from predictions corresponding to pairs of the positive ($y$) and the negative ($x$) outcomes, the AUROC is the probability that these predictions are correctly ordered.
+%
+The sample analogue is calculated as follows
+%
+\begin{equation} \label{eqn:auroc}
+    \hat{A} = \hat{\Pr} \{ y > x \} = \frac{1}{m n} \sum_{i = 1}^{m} \sum_{j = 1}^{n} I_{\left\{ y_j > x_i \right\}}.
+\end{equation}
+%
+In this version of the statistic, the calculation is the sample analogue of the probability mass under the joint density for the independent variable $x$ and $y$ within the region where the model orders correctly, i.e. in above the line $y=x$. 
+
+
+%\begin{equation}
+%    \hat{A} = Prob{\left\{ y > x \right\}}
+%\end{equation}
+%
+%\begin{equation}
+%    \hat{A} = \frac{1}{m n} \sum_{i = 1}^{m} \sum_{j = 1}^{n} I_{\left\{ y_j > x_i \right\}}
+%\end{equation}
+%
+%
+%Definition of AUROC
+%\begin{itemize}
+%    \item Direct definition: Calculation of area by integration
+%    \begin{itemize}
+%        \item $\int_{-\infty}^{\infty} TPR(t) [-FPR^{\prime}(t)] dt $
+%    \end{itemize}
+%    \item Direct definition: Pairwise comparison of correct ordering of predictions for all pairs of predictions % from positive and negative outcomes
+%    \begin{itemize}
+%        \item $\hat{A} = \hat{\Pr} \{ y > x \} = \frac{1}{m n} \sum_{i = 1}^{m} \sum_{j = 1}^{n} I_{\left\{ y_j > x_i \right\}}$
+%    \end{itemize}
+%    \item In words: If you were to pick a pair of predictions, drawn randomly from predictions corresponding to pairs of the positive ($y$) and negative ($x$) outcomes, the AUROC is the probability that these predictions are correctly ordered.
+%\end{itemize}
+
+
+
+
+% \textbf{Calculation}
+
+This calculation is provided in \citet{hanleymcneil1982}, while an implementation of the calculation is made available in \citet{proc2011}.
+This is an implementation of the approach taken in \citet{delong1988}.
+%
+A more efficient method of computation is proposed by \citet{sunxu2014}, which is a faster approach to calculating
+these quantities.
+% the quantities in \citet{hanleymcneil1982} (check reference), as well as those for \citet{delong1988}.
+%
+
+% \subsection{Volume interpretation}
+% Moved to Appendix
+
+
+
+
+% (Almost) Duplicate paragraph:
+
+% Here, it appeals to nonparametric modeling approaches.
+% In the Appendix, it transitions to the talk of ranking
+
+% Features of these two examples can be extended to the study of generic models for classification.
+% However, 
+Thinking of the AUROC statistic in this way... the problem boils down to an exercise in distinguishing between distributions of scores corresponding the positive and negative outcomes. 
+This way of framing the statistic is more appealing to practitioners. 
+Parametric solutions are not preferred in the literature, since the classification model is likely to be much more unstructured than a parametric model would allow.
+A nonparametric solution is not only possible but preferred by users in industry.
+Regardless of the particular model employed in practice, the parametric examples can still be used to explain an important correspondence between modeling methods.
+
+
+% The mapping presented next is generalized to all classification models.
+% But is moved to the Appendix.
+
+% Might be some duplication here (revise accordingly):
+
+The connection to the ranking statistics in the nonparametric literature is appealing to practitioners, since it precludes the need for parametric modeling of distributions that may be highly unstructured.
+While the ranking statistics above are intended to compare differences in sampling distributions, the mathematical equivalence to the classification problem opens up the possibility of using these approaches to evaluate models, without imposing parametric restrictions on the distributions.
+
+
+% \textbf{Why this approach}
+Taken together, with the equivalence of the ranking problem to the classification problem,
+%
+one concludes that the variation of distributions of classification variables is of paramount importance.
+This is especially so, since the AUROC statistic is the sum of the volume under the joint distribution defined by the classification distributions themselves.
+Any variation in these distributions can cause material variation in the value of the AUROC.
+
+
+% \subsection{A ``Non-parametric'' Solution}
+
+These ranking statistics also highlight the fact that the AUROC is inherently a nonparametric measure of performance.
+It is often used in combination with modeling techniques that are also nonparametric.
+%
+In some circles in industry, there is a general distaste for parametric assumptions, particularly when not supported by the data, especially when there is access to large datasets, which can be leveraged to reveal the structure of the data with more precision.
+%
+In this context, there is little justification for imposing a parametric specification for variation in distributions, when parametric distributions are not used to model the distributions themselves.
+%
+In particular, the change in classification distributions can be summarized by a nonparametric distance measurement and what follows is a discussion of the relevance of such a distance.
+
+%\begin{itemize}
+%    \item AUROC is inherently nonparametric measure of performance
+%    \begin{itemize}
+%        \item General distaste for parametric assumptions, particularly when not supported by the data
+%        \item Little justification to impose parametric specification for variation in distributions, when parametric distributions are not used for the distributions themselves
+%    \end{itemize}
+%    \item Change in distribution is summarized by a distance measurement
+%    \item Prediction interval: The set of all possible distributions this distance from the distributions in the sample
+%\end{itemize}
+
+
+
+% \textbf{Distance}
+
+In practice, a business user would track the performance of a model while it is in use for making business decisions.
+If the model is run continuously, it is prudent to take periodic measurements in AUROC.
+It is also worth monitoring the variability in distributions of classification variables passing through the model.
+Once any model moves into uncharted territory, there arises the possibility that the predictions are no longer valid, in the case that the functional form cannot be extrapolated beyond the support of the build sample.
+It would not be a problem, so long as the specification were correct throughout the domain of the model.
+
+However, in the classification problem, the distributions themselves are of first order importance, since this defines the measurement of the statistic itself.
+A careful use of a classification model would involve a specification of the terms under which the model will be discontinued or scheduled for rebuild with new data.
+If it is the case that the model is planned to be used for situations in which the variables have distributions sufficiently similar to the original build distribution, then the AUROC statistic can be expected to vary accordingly, over the foreseeable lifespan of the model.
+It is for this reason that forecast intervals are proposed that take this variation into account.
+%
+%\begin{itemize}
+%    \item In practice, track performance of model while in use
+%    \begin{itemize}
+%        \item take AUROC measurements periodically
+%    \end{itemize}
+%    \item Also, track evolution of distributions of predictions
+%    \begin{itemize}
+%        \item take periodic measurements of changes in distributions from build sample
+%    \end{itemize}
+%    \item Extreme changes in either would trigger rebuild of the model
+%    \item Prediction intervals should allow for this level of variability
+%\end{itemize}
+%
+In order to quantify this variation, a distance measure is required for the calculation of the bounds of these intervals.
+% As the modeling techniques and the evaluation methods are typically nonparametric, it is worthwhile to maintain a nonparametric measure of distance as well.
+%
+% Define $D()$ but no more, until after optimization problem.
+% Next, optimization problem.
+%
+This will be presented in the following section, after the formal specification of the modeling problem.
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
