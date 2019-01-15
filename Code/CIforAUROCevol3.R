@@ -44,7 +44,7 @@ fig_path <- sprintf('%s/Slides/Figs', wd_path)
 # Set path to table folder.
 tab_path <- sprintf('%s/Slides/Tabs', wd_path)
 
-# Set path to data folder.
+# Set path to function folder.
 # fun_path <- sprintf('%s/function', wd_path)
 fun_path <- sprintf('%s', wd_path)
 

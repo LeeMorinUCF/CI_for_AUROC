@@ -109,6 +109,34 @@ biexp_gen <- function(n_x, n_y, lambda_x, lambda_y) {
 #--------------------------------------------------------------------------------
 
 
+#--------------------------------------------------------------------------------
+# BiPower Model
+#--------------------------------------------------------------------------------
+
+bipower_gen <- function(n_x, n_y, 
+                        x_min, alpha_x, y_min, gamma_y) {
+  
+  bipower_df <- data.frame(outcomes = c(rep(FALSE, n_x),rep(TRUE, n_y)),
+                         scores = c(rpldis(n = n_x, xmin = x_min, alpha = alpha_x), 
+                                    rpldis(n = n_y, xmin = y_min, alpha = gamma_y)))
+  
+  # print(summary(bipower_df))
+  # print(summary(bipower_df[bipower_df[, 'outcomes'] == 0, ]))
+  # print(summary(bipower_df[bipower_df[, 'outcomes'] == 1, ]))
+  
+  # Add weights by outcome.
+  bipower_df[bipower_df[, 'outcomes'], 'weights'] <- 1/n_y
+  bipower_df[!bipower_df[, 'outcomes'], 'weights'] <- 1/n_x
+  
+  # Sort by scores.
+  bipower_df <- bipower_df[order(bipower_df[, 'scores']), ]
+  
+  
+}
+
+#--------------------------------------------------------------------------------
+
+
 
 
 ################################################################################
@@ -279,7 +307,7 @@ auc_rank <- function(scores, outcomes) {
 # AUC Calculation 3 - Binormal distribution
 #--------------------------------------------------------------------------------
 
-# Closed-form expression for the special case of the binorml classification model.
+# Closed-form expression for the special case of the binormal classification model.
 
 auc_binorm <- function(mu_0, sigma_0, mu_1, sigma_1) {
   
@@ -292,7 +320,7 @@ auc_binorm <- function(mu_0, sigma_0, mu_1, sigma_1) {
 # AUC Calculation 4 - Bi-exponential distribution
 #--------------------------------------------------------------------------------
 
-# Closed-form expression for the special case of the binorml classification model.
+# Closed-form expression for the special case of the biexponential classification model.
 
 auc_bi_exp <- function(lambda_0, lambda_1) {
   
@@ -301,8 +329,36 @@ auc_bi_exp <- function(lambda_0, lambda_1) {
 }
 
 
+
 #--------------------------------------------------------------------------------
-# AUC Calculation 5 - Mean AUC from distribution-free, with fixed error rate
+# AUC Calculation 5 - Bi-power-law distribution
+#--------------------------------------------------------------------------------
+
+# Closed-form expression for the special case of the bipower-law classification model.
+
+auc_bi_power <- function(x_min, alpha_x, 
+                         y_min, gamma_y) {
+  
+  # Depends on lower bound.
+  if (y_min > x_min) {
+    
+    auc <- 1 - (gamma_y - 1) / ((gamma_y - 1) + (alpha_x - 1) ) * 
+      (x_min / y_min) ^ (alpha_x - 1)
+    
+  } else {
+    
+    auc <- (alpha_x - 1) / ((gamma_y - 1) + (alpha_x - 1) ) * 
+      (y_min / x_min) ^ (gamma_y - 1)
+    
+  }
+  
+  
+  
+}
+
+
+#--------------------------------------------------------------------------------
+# AUC Calculation 6 - Mean AUC from distribution-free, with fixed error rate
 #--------------------------------------------------------------------------------
 
 # Closed-form expression for the distribution-free case, with fixed error rate.
@@ -320,7 +376,7 @@ mean_auc_fixed_error <- function(n_0, n_1, k, max_n = 1000) {
 
 
 #--------------------------------------------------------------------------------
-# AUC Calculation 5.1 - Count ratio for AUC from distribution-free, with fixed error rate
+# AUC Calculation 6.1 - Count ratio for AUC from distribution-free, with fixed error rate
 #--------------------------------------------------------------------------------
 
 # Literal application of formula gives numerical overflow for reasonable sample sizes.
