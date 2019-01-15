@@ -55,138 +55,6 @@ library(data.table)
 ################################################################################
 
 
-#--------------------------------------------------------------------------------
-# Power Law as true model.
-#--------------------------------------------------------------------------------
-
-
-# Typical unbalanced case (requires re-weighting).
-n_x <- 1000
-n_y <- 100
-# n_x <- 500
-# n_y <- 50
-
-# Set parameters for positive score distribution. 
-y_min <- 3
-gamma_y <- 2
-
-# Set parameters for negative score distribution. 
-x_min <- 2
-alpha_x <- 3
-
-
-bipower_df <- bipower_gen(n_x, n_y, 
-                          x_min, alpha_x, 
-                          y_min, gamma_y)
-
-
-summary(bipower_df)
-summary(bipower_df[bipower_df[, 'outcomes'] == 0, ])
-summary(bipower_df[bipower_df[, 'outcomes'] == 1, ])
-
-hist(bipower_df[bipower_df[, 'outcomes'] == 0, 'scores'])
-hist(bipower_df[bipower_df[, 'outcomes'] == 1, 'scores'])
-
-
-head(bipower_df, 10)
-tail(bipower_df, 10)
-
-
-
-################################################################################
-# Calculate AUROC Statistics
-################################################################################
-
-
-# Calculate AUROC by loops.
-A_hat_loops <- auc_weighted_loops(scores = bipower_df[, 'scores'], 
-                              outcomes = bipower_df[, 'outcomes'], 
-                              weights = bipower_df[, 'weights'])
-A_hat_loops
-
-
-A_hat_rank <- auc_rank(scores = bipower_df[, 'scores'], 
-                       outcomes = bipower_df[, 'outcomes'])
-A_hat_rank
-
-# Compare with theoretical calculation.
-A_hat_bi_power <- auc_bi_power(x_min, alpha_x, 
-                               y_min, gamma_y)
-A_hat_bi_power
-
-
-
-
-################################################################################
-# Simulate distribution of AUROC Statistics
-################################################################################
-
-
-# Typical unbalanced case (requires re-weighting).
-# n_x <- 1000
-# n_y <- 100
-n_x <- 500
-n_y <- 500
-
-# Set parameters for positive score distribution. 
-y_min <- 2.5
-gamma_y <- 1.2
-
-# Set parameters for negative score distribution. 
-x_min <- 2
-alpha_x <- 1.5
-
-
-# Calculate theoretical confidence interval.
-A_hat_bi_power <- auc_bi_power(x_min, alpha_x, 
-                               y_min, gamma_y)
-A_hat_bi_power
-
-# Calculate variance. 
-bipower_df <- bipower_gen(n_x, n_y, 
-                          x_min, alpha_x, 
-                          y_min, gamma_y)
-A_hat_var <- var_auroc_fast_calc(dt_in = as.data.table(bipower_df))
-A_hat_var
-
-# Calculate confidence interval by inverting z-statistic. 
-A_hat_CI <- confidence_interval(mean = A_hat_bi_power, 
-                                var = A_hat_var, 
-                                alpha = 0.05)
-A_hat_CI
-
-# Simulate distribution of AUROC Statistics
-num_sims <- 500
-
-auroc_table <- rep(NA, num_sims)
-
-for (sim_num in 1:num_sims) {
-  
-  if (round(sim_num/num_sims*10) == sim_num/num_sims*10) {
-    print(sprintf('Now calculating AUROC number %d of %d.', 
-                  sim_num, num_sims))
-  }
-  
-  bipower_df <- bipower_gen(n_x, n_y, 
-                            x_min, alpha_x, 
-                            y_min, gamma_y)
-  
-  
-  A_hat_rank <- auc_rank(scores = bipower_df[, 'scores'], 
-                         outcomes = bipower_df[, 'outcomes'])
-  
-  auroc_table[sim_num] <- A_hat_rank
-  
-}
-
-hist(auroc_table)
-summary(auroc_table)
-
-
-
-################################################################################
-# Simulation Analysis of Coverage Rates
-################################################################################
 
 # Construct a table with the parameters required. 
 
@@ -222,6 +90,15 @@ auroc_table <- auroc_table[, c('n_y', 'n_x',
 head(auroc_table, 20)
 
 # Replicate table for required number of replications. 
+
+
+
+
+################################################################################
+# Simulation Analysis 
+# First: Distributions of AUROC Statistics
+# Later: Coverage Rates
+################################################################################
 
 
 for (sim_num in 1:num_sims) {
