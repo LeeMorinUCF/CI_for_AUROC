@@ -69,12 +69,13 @@ n_x <- 500
 n_y <- 500
 
 # Set parameters for positive score distribution. 
-y_min <- 2.5
-gamma_y <- 1.2
+# y_min <- 2.5
+y_min <- 2.0
+gamma_y <- 1.5
 
 # Set parameters for negative score distribution. 
-x_min <- 2
-alpha_x <- 1.5
+x_min <- 2.0
+alpha_x <- 2.5
 
 
 
@@ -83,7 +84,7 @@ alpha_x <- 1.5
 
 
 ################################################################################
-# Simulate distribution of AUROC Statistics
+# Calculate summary statistics for AUROC Statistics
 ################################################################################
 
 
@@ -109,8 +110,34 @@ A_hat_CI <- confidence_interval(mean = A_hat_bi_power,
                                 alpha = 0.05)
 # A_hat_CI
 
+# # Plot the pair of distributions.
+# hist(bipower_df[!bipower_df[, 'outcomes'], 'scores'],
+#      breaks = 1000000,
+#      main = 'Histogram of Scores',
+#      xlab = 'Scores',
+#      col='blue', 
+#      xlim = c(0, quantile(bipower_df[, 'scores'], 0.25)))
+# 
+# hist(bipower_df[bipower_df[, 'outcomes'], 'scores'], 
+#      main = 'Histogram of Scores', 
+#      xlab = 'Scores', 
+#      col='blue', xlim = c(0, quantile(bipower_df[, 'scores'], 0.99)))
+# hist(bipower_df[!bipower_df[, 'outcomes'], 'scores'], 
+#      col='red', add = T)
+# Completely uninformative. 
+
+################################################################################
 # Simulate distribution of AUROC Statistics
-auroc_table <- rep(NA, num_sims)
+################################################################################
+
+
+# Simulate distribution of AUROC Statistics
+auroc_table <- data.frame(A_hat = rep(NA, num_sims), 
+                          A_hat_plug = rep(NA, num_sims), 
+                          x_min_hat = rep(NA, num_sims),
+                          y_min_hat = rep(NA, num_sims),
+                          alpha_x_hat = rep(NA, num_sims), 
+                          gamma_y_hat = rep(NA, num_sims))
 
 for (sim_num in 1:num_sims) {
   
@@ -119,21 +146,97 @@ for (sim_num in 1:num_sims) {
                   sim_num, num_sims))
   }
   
+  # Generate the sample.
   bipower_df <- bipower_gen(n_x, n_y, 
                             x_min, alpha_x, 
                             y_min, gamma_y)
   
-  
+  # Calculate the empirical AUROC statistic.
   A_hat_rank <- auc_rank(scores = bipower_df[, 'scores'], 
                          outcomes = bipower_df[, 'outcomes'])
   
-  auroc_table[sim_num] <- A_hat_rank
+  # # Power law estimation: Unknown xmin estimated
+  # 
+  # # Estimate the power law exponents (positive distribution).
+  # m_pl <- displ$new(bipower_df[bipower_df[, 'outcomes'], 'scores'])
+  # est_pl <- estimate_xmin(m_pl)
+  # # est_pl$setXmin(est_pl)
+  # gamma_y_hat <- est_pl$pars
+  # y_min_hat <- est_pl$xmin
+  # # Estimate the power law exponents (negative distribution).
+  # m_pl <- displ$new(bipower_df[!bipower_df[, 'outcomes'], 'scores'])
+  # est_pl <- estimate_xmin(m_pl)
+  # # est_pl$setXmin(est_pl)
+  # alpha_x_hat <- est_pl$pars
+  # x_min_hat <- est_pl$xmin
+  
+  # Power law estimation: known xmin imposed on MLE of alpha_x
+  
+  # Estimate the power law exponents (positive distribution).
+  m_pl <- displ$new(bipower_df[bipower_df[, 'outcomes'], 'scores'])
+  m_pl$setXmin(y_min)
+  est_pl <- estimate_pars(m_pl)
+  gamma_y_hat <- est_pl$pars
+  y_min_hat <- y_min # Plug in true value
+  
+  # Estimate the power law exponents (negative distribution).
+  m_pl <- displ$new(bipower_df[!bipower_df[, 'outcomes'], 'scores'])
+  m_pl$setXmin(x_min)
+  est_pl <- estimate_pars(m_pl)
+  alpha_x_hat <- est_pl$pars
+  x_min_hat <- x_min # Plug in true value
+  
+  
+  # Calculate the theoretical AUROC with a plug-in estimator. 
+  # Use known true values of location parameter. 
+  A_hat_plug <- auc_bi_power(x_min_hat, alpha_x_hat, 
+                             y_min_hat, gamma_y_hat)
+  
+  # Store results.
+  auroc_table[sim_num, 'A_hat'] <- A_hat_rank
+  auroc_table[sim_num, 'A_hat_plug'] <- A_hat_plug
+  auroc_table[sim_num, 'x_min_hat'] <- x_min_hat
+  auroc_table[sim_num, 'y_min_hat'] <- y_min_hat
+  auroc_table[sim_num, 'alpha_x_hat'] <- alpha_x_hat
+  auroc_table[sim_num, 'gamma_y_hat'] <- gamma_y_hat
   
 }
 
-hist(auroc_table)
-summary(auroc_table)
 
+# Plot comparison of Empirical and plug-in estimators.
+min_A_hat <- min(auroc_table[, c('A_hat', 'A_hat_plug')])
+max_A_hat <- max(auroc_table[, c('A_hat', 'A_hat_plug')])
+
+row_sel <- auroc_table[, 'x_min_hat'] == x_min & 
+  auroc_table[, 'y_min_hat'] == y_min
+
+plot(auroc_table[row_sel, 'A_hat'], 
+     auroc_table[row_sel, 'A_hat_plug'], 
+     col = 'blue', 
+     main = 'AUROC Estimators', 
+     xlab = 'Empirical AUROC',
+     ylab = 'Plug-in Estimator',
+     xlim = c(min_A_hat, max_A_hat), 
+     ylim = c(min_A_hat, max_A_hat))
+lines(c(min_A_hat, max_A_hat), c(min_A_hat, max_A_hat), 
+      col = 'black', lwd = 3)
+lines(c(A_hat_bi_power, A_hat_bi_power), c(min_A_hat, max_A_hat), 
+      col = 'black', lwd = 2)
+lines(c(min_A_hat, max_A_hat), c(A_hat_bi_power, A_hat_bi_power), 
+      col = 'black', lwd = 2)
+
+
+hist(auroc_table[, 'A_hat'], 
+     breaks = 100,
+     main = 'Histogram of AUROC',
+     xlab = 'AUROC',
+     col='blue')
+lines(c(A_hat_bi_power, A_hat_bi_power), c(0, num_sims), 
+      col = 'black', lwd = 3)
+
+
+summary(auroc_table)
+A_hat_bi_power
 
 
 ################################################################################
