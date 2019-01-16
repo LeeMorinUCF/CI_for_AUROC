@@ -65,8 +65,10 @@ num_sims <- 500
 # Typical unbalanced case (requires re-weighting).
 # n_x <- 1000
 # n_y <- 100
-n_x <- 500
-n_y <- 500
+# n_x <- 500
+# n_y <- 500
+n_x <- 2000
+n_y <- 2000
 
 # Set parameters for positive score distribution. 
 # y_min <- 2.5
@@ -226,11 +228,15 @@ lines(c(min_A_hat, max_A_hat), c(A_hat_bi_power, A_hat_bi_power),
       col = 'black', lwd = 2)
 
 
-hist(auroc_table[, 'A_hat'], 
+hist(auroc_table[, 'A_hat_plug'], 
      breaks = 100,
      main = 'Histogram of AUROC',
      xlab = 'AUROC',
-     col='blue')
+     col='red')
+hist(auroc_table[, 'A_hat'], 
+     breaks = 100,
+     col='blue',
+     add = TRUE)
 lines(c(A_hat_bi_power, A_hat_bi_power), c(0, num_sims), 
       col = 'black', lwd = 3)
 

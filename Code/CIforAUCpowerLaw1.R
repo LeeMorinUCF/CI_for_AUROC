@@ -116,6 +116,80 @@ A_hat_bi_power
 
 
 
+#--------------------------------------------------------------------------------
+# Testing calculations of AUROC statistics
+#--------------------------------------------------------------------------------
+
+
+
+# Calculate densities on a grid and integrate. 
+
+x_step_1 <- 0.1
+y_step_1 <- 0.1
+x_grid_1 <- seq(x_min, 10, by = x_step_1)
+x_grid_2 <- seq(11, 100, by = 1)
+y_grid_1 <- seq(y_min, 10, by = y_step_1)
+y_grid_2 <- seq(11, 100, by = 1)
+x_grid <- c(x_grid_1, x_grid_2)
+y_grid <- c(y_grid_1, y_grid_2)
+
+
+# Create a dataset with observations weighted by densities. 
+
+bipower_test <- data.frame(outcomes = c(rep(FALSE, length(x_grid)),
+                                        rep(TRUE, length(y_grid))),
+                         scores = c(x_grid, y_grid))
+
+
+# Add weights by outcome using midpoint rule.
+bipower_test[bipower_test[, 'outcomes'], 'weights'] <- 
+  (gamma_y - 1) * y_min^(gamma_y - 1) * 
+  c( (y_grid_1 + 0.5*y_step_1)^(-gamma_y)*y_step_1, 
+     (y_grid_2 + 0.5)^(-gamma_y) )
+
+
+bipower_test[!bipower_test[, 'outcomes'], 'weights'] <- 
+  (alpha_x - 1) * x_min^(alpha_x - 1) * 
+  c( (x_grid_1 + 0.5*x_step_1)^(-alpha_x)*x_step_1, 
+     (x_grid_2 + 0.5)^(-alpha_x) )
+
+
+# Check for accuracy.
+head(bipower_test, 10)
+tail(bipower_test, 10)
+
+
+summary(bipower_test[bipower_test[, 'outcomes'], ])
+summary(bipower_test[!bipower_test[, 'outcomes'], ])
+
+plot(bipower_test[bipower_test[, 'outcomes'], 'weights'])
+plot(bipower_test[!bipower_test[, 'outcomes'], 'weights'])
+
+
+
+sum(bipower_test[bipower_test[, 'outcomes'], 'weights'])
+sum(bipower_test[!bipower_test[, 'outcomes'], 'weights'])
+
+
+# Adjust weights on tails of distributions to normalize. 
+# pdf_adj <- 1 - sum(bipower_test[bipower_test[, 'outcomes'], 'weights'])
+# bipower_test[bipower_test[, 'outcomes'], 'weights'] <- 
+#   bipower_test[bipower_test[, 'outcomes'], 'weights'] * 
+#   c(rep(1, length(x_grid_1)), rep(pdf_adj, length(x_grid_1)))
+
+
+# Calculate AUROC by loops.
+A_hat_loops_test <- auc_weighted_loops(scores = bipower_test[, 'scores'], 
+                                       outcomes = bipower_test[, 'outcomes'], 
+                                       weights = bipower_test[, 'weights'])
+
+
+# Compare with other calculations.
+A_hat_loops
+A_hat_rank
+A_hat_bi_power
+A_hat_loops_test
+
 
 ################################################################################
 # Simulate distribution of AUROC Statistics
