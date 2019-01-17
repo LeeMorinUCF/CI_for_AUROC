@@ -65,10 +65,10 @@ num_sims <- 500
 # Typical unbalanced case (requires re-weighting).
 # n_x <- 1000
 # n_y <- 100
-# n_x <- 500
-# n_y <- 500
-n_x <- 2000
-n_y <- 2000
+n_x <- 500
+n_y <- 500
+# n_x <- 2000
+# n_y <- 2000
 
 # Set parameters for positive score distribution. 
 # y_min <- 2.5
@@ -79,7 +79,9 @@ gamma_y <- 1.5
 x_min <- 2.0
 alpha_x <- 2.5
 
-
+# Select continuous or discrete power law.
+# disc_or_cts <- 'disc' # Default
+disc_or_cts <- 'cts'
 
 
 
@@ -151,7 +153,8 @@ for (sim_num in 1:num_sims) {
   # Generate the sample.
   bipower_df <- bipower_gen(n_x, n_y, 
                             x_min, alpha_x, 
-                            y_min, gamma_y)
+                            y_min, gamma_y,
+                            disc_or_cts)
   
   # Calculate the empirical AUROC statistic.
   A_hat_rank <- auc_rank(scores = bipower_df[, 'scores'], 
