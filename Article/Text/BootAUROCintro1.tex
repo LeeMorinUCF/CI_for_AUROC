@@ -1,0 +1,102 @@
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Article:
+% Bootstrap Inference for the Area Under the ROC Curve
+% Introduction
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Introduction}
+
+The \texttt{pROC} has a bootstrap technique built into the package following the recommendations contained in (Carpenter). 
+The paper by Carpenter is aimed at a health audience and not specifically derived for the AUROC. 
+It boils down to a version of the pairs bootstrap. 
+This DGP does not satisfy the null hypothesis as the population AUROC statistic is the AUROC realized in the sample.
+
+Essentially, this amounts to adding noise to the standard error approach set out 
+in \citet{delong1988}, and is made computationally efficient in \citet{sunxu2014}.
+Under this approach, the variance of the AUROC is calculated as functions of the parameters of the exponential distributions 
+to calculate a $z$-statistic.
+\citet{hanleymcneil1982} presents the formulation of the variance of this statistic.
+Under this approach, the statistics are calculated from the empirical distributions. 
+
+However, this approach does not alow for asymmetry in the sampling distribution of the AUROC statistic. 
+If one wants to use a sampling distribution close to the actual distribution, asymmetry and all, the bootstrap approach in \texttt{pROC} is the only currently available option. 
+It is a reasonable approach but the approach presented in this paper is an improvement because it imposes a realistic sampling distribution AND also imposes the null hypothesized value of the AUROC statistic. 
+
+How do I do this? By finding the nearest distribution to the EDF from the sample such that the null hypothesis is satisfied. 
+
+
+
+\section{Bootstrap}
+
+
+\begin{itemize}
+
+  \item Set up problem. Make sure to specify the distance metric so that the true distribution is under the null hypothesis. 
+  
+  \item Proposition 1. The choice set is nonempty. There exists a distribution that satisfies the null hypothesis. That is, there is some distribution that is a re-weighting of the distribution that can generate any value of the AUROC, as long as the support of the distributions overlap. 
+  
+  \item Secondly, the distribution satisfies the FOC's. This problem may or may not have a unique solution. There could be multiple distributions with the same conditions. Think of a pathological case with a few, maybe two, observations. 
+      
+  \item This problem is well defined, since I restrict the distribution to a finite set of at most $n$ points, restricted to the unique realizations in the sample of size $n$. Tightness is not an issue, since the samples follow from the DGP and each of the bootstrap DGPs will have the same support as the individual samples. 
+      
+  \item Convergence properties: As the sample size increases, the sequence of bootstrap distributions will converge to equal weighting. This is because the empirical CDF will converge to the populations CDF. The sequence of distributions will satisfy the null hypothesis in that the calculated AUROC is exactly the hypothesized AUROC value under the bootstrap DGP. 
+      
+  \item A result of this is that the pairs bootstrap does not satisfy the null hypothesis. 
+  
+  \item The sequence of distributions will converge to something. 
+  The something that this converges to will satisfy the null hypothesis as well. 
+  In particular, if the null is true, the distribution converges to the population CDF. 
+  
+  \item Under alternatives, it would be nice if it converged to something that was well defined. 
+  Although this doesn't matter so much, since divergence is another way to get power. 
+  
+  \item The algorithm for the solution is a contraction mapping. 
+  Therefore the repeated application of the FOC iteration will push the distribution toward the optimal weighting for the bootstrap sample. 
+  
+  \item Derive the result for the discrete case for implementation with the sample. 
+
+\end{itemize}
+
+
+\section{Example: Power Law Distribution}
+
+Consider the case of power law distribution.
+Suppose that $y$ is distributed on support $[y_{min}, \infty)$ with power parameter $\gamma$.
+Similarly, suppose that $x$ is distributed on support $[x_{min}, \infty)$ with power parameter $\alpha$. 
+
+Under this scenario, the AUROC will be as follows.
+
+
+\textbf{Case 1: $y_{min} \geq x_{min}$}
+
+\begin{equation}\label{eqn:powAUROC1}
+  1 - \frac{\gamma - 1}{(\gamma - 1) + (\alpha - 1)}
+    \left( \frac{x_{min}}{y_{min}} \right) ^{\alpha - 1}
+\end{equation}
+
+\textbf{Case 2: $y_{min} \leq x_{min}$}
+
+\begin{equation}\label{eqn:powAUROC2}
+  \frac{\alpha - 1}{(\gamma - 1) + (\alpha - 1)}
+    \left( \frac{y_{min}}{x_{min}} \right) ^{\gamma - 1}
+\end{equation}
+
+
+Note that the AUROC is well-defined as long as $\gamma > 1$ and $\alpha > 1$. 
+Under this case, the probability mass defining AUROC does not diverge. 
+No moments of the power law distribution are necessary for the distribution of the AUROC to be well-defined. However, the sampling distribution of the AUROC is asymmetric. 
+
+This implies that testing the null hypothesis is more complicated that simply shifting the distribution or comparing the number of standard deviations of the calculated statistic from the null value. 
+
+
+
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

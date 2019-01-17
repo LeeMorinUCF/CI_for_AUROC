@@ -1,0 +1,120 @@
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Article:
+% Prediction Intervals for the Area Under the ROC Curve
+% Title page and Abstract
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+\begin{center}
+\vspace{3.0in}
+
+
+{\Large
+% Bootstrap Inference for the \\
+% \vspace{0.10in}
+% Area Under the ROC Curve \\
+Bootstrap Inference on the Area Under the ROC Curve \\
+% \vspace{0.10in}
+% with a Time-varying Population \\
+}
+
+\vspace{0.75in}
+
+
+{\large{Lealand Morin\footnote{I am grateful for helpful feedback
+% from Morten Nielsen, James MacKinnon,
+% Bill McLausland
+% and
+from seminar participants at
+% Queen's University. %, other Universities
+the University of Central Florida and at the meeting of the 2018 Canadian Econometric Study Group in Ottawa. %, other Universities
+% and annual meetings of the Canadian Economics Association.
+% I also gratefully acknowledge SSHRC for their generous support of this research.
+All errors are my own. } \\
+Department of Economics \\
+% Queen's University \\
+% morinl@econ.queensu.ca \\
+% www.econ.queensu.ca/faculty/morin/home
+%
+College of Business Administration \\
+University of Central Florida \\
+Lealand.Morin@business.ucf.edu \\
+https://business.ucf.edu/person/lealand-morin/ }}
+
+
+
+
+\vspace{0.5in}
+
+\today
+
+\vspace{0.50in}
+
+
+
+{\large{Abstract}}  \\
+\vspace{0.25in}
+
+\end{center}
+
+There are several approaches to quantify the variability of the area under the receiver operating characteristic curve (AUROC) to measure the predictive performance of a binary classification model.
+%
+These methods typically involve calculating the variance of the estimate and calculating a $z$-statistic, under specified distributional assumptions
+% or following some distribution-free approaches.
+to characterize sampling variability.
+%
+
+Bootsrap methods are available but they are limited to the pairs bootstrap, 
+which does not impose the null hypothesis. 
+
+%
+In contrast, this paper proposes an approach
+to impose the null hypothesis of a particular AUROC,
+% to characterize variability in the AUROC 
+by shifting the sampling distribution
+toward a distribution that has the specified AUROC under the null hypothesis.
+% without the need for distributional assumptions. % The approach involves solving for the closest distribution.
+%
+
+%
+Under this approach, distance is measured as the Kullback-Leibler divergence between the full sample and other potential samples.
+%
+The extreme values of the AUROC statistics from distributions with the specified value of divergence
+provide an interval for forecasting the AUROC to be expected in future applications of the model.
+%
+
+In essence, the procedure involves re-weighting the observations to
+those of
+the closest data generating process
+that satisfies the null hypothesis of a particular AUROC value.
+
+
+The key element is a recursive algorithm for reallocation of sampling weights in the empirical distribution.
+The algorithm solves for a set of fixed points that characterize the optimal distribution,
+from which the desired AUROC values are calculated.
+
+
+Simulation exercises show the size and power are better than existing alternatives.
+
+
+
+\vspace{0.10in}
+
+
+
+
+KEY WORDS: Bootstrap, ROC curve, AUC, AUROC, classification models, predictive modeling, Mann-Whitney statistic, Wilcoxon statistic, Kullback-Leibler divergence.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\vspace{0.10in}
+% \pagebreak
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

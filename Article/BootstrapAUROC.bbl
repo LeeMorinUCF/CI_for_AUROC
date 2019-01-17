@@ -1,0 +1,91 @@
+\ifx\undefined\BySame
+\newcommand{\BySame}{\leavevmode\rule[.5ex]{3em}{.5pt}\ }
+\fi
+\ifx\undefined\textsc
+\newcommand{\textsc}[1]{{\sc #1}}
+\newcommand{\emph}[1]{{\em #1\/}}
+\let\tmpsmall\small
+\renewcommand{\small}{\tmpsmall\sc}
+\fi
+\begin{thebibliography}{}
+
+\harvarditem[Bamber]{Bamber}{1947}{bamber1975}
+\textsc{Bamber, D.}  (1947): ``The area above the ordinal dominance graph and
+  the area below the receiver operating characteristic graph,'' \emph{Journal
+  of Mathematical Psychology}, 12(12), 387--415.
+
+\harvarditem[DeLong and Clarke-Pearson]{DeLong and
+  Clarke-Pearson}{1988}{delong1988}
+\textsc{DeLong, E., D.~D.,  {\small and} D.~Clarke-Pearson}  (1988):
+  ``Comparing the Areas under Two or More Correlated Receiver Operating
+  Characteristic Curves: A Nonparametric Approach,'' \emph{Biometrics}, pp.
+  837--845.
+
+\harvarditem[Demidenko]{Demidenko}{2012}{demidenko2012}
+\textsc{Demidenko, E.}  (2012): ``Confidence intervals and bands for the
+  binormal ROC curve revisited,'' \emph{Journal of Applied Statistics}, 39,
+  67--79.
+
+\harvarditem[Hanley]{Hanley}{1989}{hanley1989}
+\textsc{Hanley, J.}  (1989): ``Receiver operating characheristic (ROC)
+  methodology: the state of the art,'' \emph{Critical Reviews in Diagnostic
+  Imaging}, 29(3), 307.
+
+\harvarditem[Hanley and McNeil]{Hanley and McNeil}{1982}{hanleymcneil1982}
+\textsc{Hanley, J.,  {\small and} B.~McNeil}  (1982): ``The Meaning and Use of
+  the Area under a Receiver Operating (ROC) Curve,'' \emph{Radiology}, 143,
+  29--36.
+
+\harvarditem[Kendall and Gibbons]{Kendall and Gibbons}{1990}{kendall1990}
+\textsc{Kendall, M.,  {\small and} J.~Gibbons}  (1990): \emph{Rank Correlation
+  Methods}. Arnold, London.
+
+\harvarditem[Lehmann and D'Abrera]{Lehmann and D'Abrera}{2006}{lehmann2006}
+\textsc{Lehmann, E.,  {\small and} H.~D'Abrera}  (2006): \emph{Nonparametrics:
+  statistical methods based on ranks}. Springer, New York, NY.
+
+\harvarditem[Mann and Whitney]{Mann and Whitney}{1947}{mannwhitney1947}
+\textsc{Mann, H.,  {\small and} D.~Whitney}  (1947): ``On a test of whether one
+  of two random variables is stochastically larger than the other,'' \emph{The
+  Annals of Mathematical Statistics}, 18(1), 50--60.
+
+\harvarditem[Newson]{Newson}{2006}{newson2006}
+\textsc{Newson, R.}  (2006): ``Confidence intervals for rank statistics:
+  Somers' D and extensions,'' \emph{The Stata Journal}, 6(3), 309--334.
+
+\harvarditem[Peterson and Fox]{Peterson and Fox}{1954}{peterson1954}
+\textsc{Peterson, W, B.~T.,  {\small and} W.~Fox}  (1954): ``The theory of
+  signal detectability,'' \emph{IRE Professional Group on Information Theory},
+  4(4), 171--212.
+
+\harvarditem[Robin, Turck, Hainard, Tiberti, Lisacek, Sanchez, and
+  Müller]{Robin, Turck, Hainard, Tiberti, Lisacek, Sanchez, and
+  Müller}{2011}{proc2011}
+\textsc{Robin, X., N.~Turck, A.~Hainard, N.~Tiberti, F.~Lisacek, J.-C. Sanchez,
+   {\small and} M.~Müller}  (2011): ``pROC: an open-source package for R and
+  S+ to analyze and compare ROC curves,'' \emph{BMC Bioinformatics}, 12, 77.
+
+\harvarditem[Somers]{Somers}{1962}{somers1962}
+\textsc{Somers, R.~H.}  (1962): ``A new asymmetric measure of association for
+  ordinal variables,'' \emph{American Sociological Review}, 27, 799--811.
+
+\harvarditem[Sun and Xu]{Sun and Xu}{2014}{sunxu2014}
+\textsc{Sun, X.,  {\small and} W.~Xu}  (2014): ``Fast Implementation of
+  Delong's Algorithm for Comparing the Areas under Correlated Receiver
+  Operating Characteristic Curves,'' \emph{IEEE Signal Processing Letters}.
+
+\harvarditem[Van~Meter and Middleton]{Van~Meter and
+  Middleton}{1954}{vanmeter1954}
+\textsc{Van~Meter, D.,  {\small and} D.~Middleton}  (1954): ``Modern
+  statistical approaches to reception in communication theory,'' \emph{IRE
+  Professional Group on Information Theory}, 4(4), 119--145.
+
+\harvarditem[Wald]{Wald}{1949}{wald1949}
+\textsc{Wald, A.}  (1949): ``Statistical Decision Functions,'' \emph{The Annals
+  of Mathematical Statistics}, pp. 165--205.
+
+\harvarditem[Wilcoxon]{Wilcoxon}{1945}{wilcoxon1945}
+\textsc{Wilcoxon, F.}  (1945): ``Individual comparisons by ranking methods,''
+  \emph{Biometrics Bulletin}, 1(6), 80–83.
+
+\end{thebibliography}
