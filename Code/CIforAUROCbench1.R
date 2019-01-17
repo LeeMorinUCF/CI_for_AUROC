@@ -336,14 +336,15 @@ auc_slow <- function(scores, outcomes) {
 
 # Follows the methodology for the equivalent Wilcoxon Signed-Rank Test.
 
-auc_rank <- function(scores, outcomes) {
+auc_rank <- function(scores, outcomes, 
+                     ties_method = 'average') {
   
   # Calculate constants.
   n_1 <- sum(outcomes, na.rm = FALSE)
   n_0 <- sum(!outcomes, na.rm = FALSE)
   
   # Obtain ranks of scores.
-  ranks <- rank(scores)
+  ranks <- rank(scores, ties.method = ties_method)
   
   # Calculate probability from number of permutations.
   auc_rank <- (sum(ranks[outcomes]) - n_1*(n_1 + 1)/2)/n_0/n_1

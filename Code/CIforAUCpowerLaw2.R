@@ -65,10 +65,10 @@ num_sims <- 500
 # Typical unbalanced case (requires re-weighting).
 # n_x <- 1000
 # n_y <- 100
-n_x <- 500
-n_y <- 500
-# n_x <- 2000
-# n_y <- 2000
+# n_x <- 500
+# n_y <- 500
+n_x <- 1000
+n_y <- 1000
 
 # Set parameters for positive score distribution. 
 # y_min <- 2.5
@@ -83,7 +83,9 @@ alpha_x <- 2.5
 # disc_or_cts <- 'disc' # Default
 disc_or_cts <- 'cts'
 
-
+# Specify method of handling ties in ranking for AUROC.
+ties_method_list <- c("average", "first", "last", 
+                      "random", "max", "min")
 
 
 
@@ -103,7 +105,8 @@ bipower_df <- bipower_gen(n_x, n_y,
                           y_min, gamma_y)
 
 A_hat_rank <- auc_rank(scores = bipower_df[, 'scores'], 
-                       outcomes = bipower_df[, 'outcomes'])
+                       outcomes = bipower_df[, 'outcomes'], 
+                       ties_method = 'average')
 # A_hat_rank
 A_hat_var <- var_auroc_fast_calc(dt_in = as.data.table(bipower_df))
 # A_hat_var
@@ -156,9 +159,6 @@ for (sim_num in 1:num_sims) {
                             y_min, gamma_y,
                             disc_or_cts)
   
-  # Calculate the empirical AUROC statistic.
-  A_hat_rank <- auc_rank(scores = bipower_df[, 'scores'], 
-                         outcomes = bipower_df[, 'outcomes'])
   
   # # Power law estimation: Unknown xmin estimated
   # 
@@ -197,8 +197,29 @@ for (sim_num in 1:num_sims) {
   A_hat_plug <- auc_bi_power(x_min_hat, alpha_x_hat, 
                              y_min_hat, gamma_y_hat)
   
-  # Store results.
-  auroc_table[sim_num, 'A_hat'] <- A_hat_rank
+  
+  # Calculate and store empirical AUROC statistic.
+  for (tie_method_num in 1:length(ties_method_list)) {
+    
+    
+    # Calculate the empirical AUROC statistic.
+    A_hat_rank <- auc_rank(scores = bipower_df[, 'scores'], 
+                           outcomes = bipower_df[, 'outcomes'], 
+                           ties_method = ties_method_list[tie_method_num])
+    
+    # Store results from AUROC with ranking options.
+    # auroc_table[sim_num, 'A_hat'] <- A_hat_rank
+    A_hat_col_name <- sprintf('A_hat_%s', ties_method_list[tie_method_num])
+    auroc_table[sim_num, A_hat_col_name] <- A_hat_rank
+  
+  }
+  
+  # Store default A_hat calculation using average rank for ties.
+  auroc_table[sim_num, 'A_hat'] <- auroc_table[sim_num, 'A_hat_average']
+  
+  
+  
+  # Store results from known power law estimates. 
   auroc_table[sim_num, 'A_hat_plug'] <- A_hat_plug
   auroc_table[sim_num, 'x_min_hat'] <- x_min_hat
   auroc_table[sim_num, 'y_min_hat'] <- y_min_hat
@@ -207,6 +228,11 @@ for (sim_num in 1:num_sims) {
   
 }
 
+# Select a particular A_hat for plotting.
+tie_method_num <- 1
+A_hat_col_name <- sprintf('A_hat_%s', ties_method_list[tie_method_num])
+auroc_table[, 'A_hat'] <- auroc_table[, A_hat_col_name]
+
 
 # Plot comparison of Empirical and plug-in estimators.
 min_A_hat <- min(auroc_table[, c('A_hat', 'A_hat_plug')])
@@ -214,6 +240,8 @@ max_A_hat <- max(auroc_table[, c('A_hat', 'A_hat_plug')])
 
 row_sel <- auroc_table[, 'x_min_hat'] == x_min & 
   auroc_table[, 'y_min_hat'] == y_min
+
+
 
 plot(auroc_table[row_sel, 'A_hat'], 
      auroc_table[row_sel, 'A_hat_plug'], 
@@ -235,7 +263,8 @@ hist(auroc_table[, 'A_hat_plug'],
      breaks = 100,
      main = 'Histogram of AUROC',
      xlab = 'AUROC',
-     col='red')
+     col='red',
+     xlim = c(min_A_hat, max_A_hat))
 hist(auroc_table[, 'A_hat'], 
      breaks = 100,
      col='blue',
