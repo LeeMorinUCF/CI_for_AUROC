@@ -73,7 +73,7 @@ n_y <- 1000
 # Set parameters for positive score distribution. 
 # y_min <- 2.5
 y_min <- 2.0
-gamma_y <- 1.5
+gamma_y <- 1.2
 
 # Set parameters for negative score distribution. 
 x_min <- 2.0

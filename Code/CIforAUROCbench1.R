@@ -139,9 +139,9 @@ bipower_gen <- function(n_x, n_y,
   
   
   
-  bipower_df <- data.frame(outcomes = c(rep(FALSE, n_x),rep(TRUE, n_y)),
-                         scores = c(rpldis(n = n_x, xmin = x_min, alpha = alpha_x), 
-                                    rpldis(n = n_y, xmin = y_min, alpha = gamma_y)))
+  # bipower_df <- data.frame(outcomes = c(rep(FALSE, n_x),rep(TRUE, n_y)),
+  #                        scores = c(rpldis(n = n_x, xmin = x_min, alpha = alpha_x), 
+  #                                   rpldis(n = n_y, xmin = y_min, alpha = gamma_y)))
   
   # print(summary(bipower_df))
   # print(summary(bipower_df[bipower_df[, 'outcomes'] == 0, ]))
@@ -335,6 +335,24 @@ auc_slow <- function(scores, outcomes) {
 #--------------------------------------------------------------------------------
 
 # Follows the methodology for the equivalent Wilcoxon Signed-Rank Test.
+
+auc_rank_dt <- function(dt_in) {
+  
+  
+  # Get parameters from inputs.
+  n_y <- dt_in[outcomes == TRUE, .N]
+  n_x <- dt_in[outcomes == FALSE, .N]
+  
+  # Calculate ranks.
+  dt_in[, rank_z := rank(scores)]
+  
+  # Estimate AUROC.
+  auroc_hat_est <- dt_in[outcomes == TRUE, 
+                         ( sum(rank_z) - 0.5*n_y*(n_y + 1) )/(n_y*n_x)]
+  
+  return(auroc_hat_est)
+  
+}
 
 auc_rank <- function(scores, outcomes, 
                      ties_method = 'average') {
